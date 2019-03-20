@@ -22,13 +22,12 @@
   "homepage": "https://github.com/digitalbazaar/bedrock-ssm-mongodb",
   "dependencies": {
     "assert-plus": "^1.0.0",
-    "base64url-universal": "^1.0.0",
-    "uuid-random": "^1.0.6"
+    "base64url-universal": "^1.0.0"
   },
   "peerDependencies": {
-    "bedrock": "^1.12.0",
+    "bedrock": "^1.15.0",
     "bedrock-mongodb": "^5.5.0",
-    "bedrock-package-manager": "digitalbazaar/bedrock-package-manager#initial"    
+    "bedrock-package-manager": "digitalbazaar/bedrock-package-manager#initial"
   },
   "engines": {
     "node": ">=8.9.0"
