@@ -6,7 +6,8 @@
     "test": "node --preserve-symlinks test test"
   },
   "dependencies": {
-    "bedrock": "^1.14.0",
+    "bedrock": "^1.15.0",
+    "bedrock-package-manager": "digitalbazaar/bedrock-package-manager#initial",
     "bedrock-ssm-mongodb": "file:..",
     "bedrock-test": "^2.1.0"
   }
