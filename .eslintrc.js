@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['eslint-config-digitalbazaar/jsdoc'],
+  extends: ['digitalbazaar', 'digitalbazaar/jsdoc'],
   env: {
     node: true
   }
