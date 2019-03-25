@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "bedrock": "^1.15.0",
-    "bedrock-package-manager": "digitalbazaar/bedrock-package-manager#initial",
+    "bedrock-mongodb": "^5.5.0",
+    "bedrock-package-manager": "^1.0.0",
     "bedrock-ssm-mongodb": "file:..",
     "bedrock-test": "^2.1.0"
   }
