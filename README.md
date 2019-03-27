@@ -1,6 +1,32 @@
 # bedrock-ssm-mongodb
 
-# API Reference
+## Usage
+This API is designed to be accessed using the
+[bedrock-package-manager](https://github.com/digitalbazaar/bedrock-package-manager#usage)
+API.
+
+```js
+const brPackageManager = require('bedrock-package-manager');
+
+// require this module in the application
+// it registers itself with bedrock-package-manager
+require('bedrock-ssm-mongodb');
+
+// use the API
+exports.callMethod = async ({method, options, plugin}) => {
+  // the alias for bedrock-ssm-mongodb is 'ssm-v1'
+  // the type for bedrock-ssm-mongodb is 'bedrock-kms-store'
+  const {packageName} = brPackageManager.get(
+    {alias: plugin, type: 'bedrock-kms-store'});
+  const store = require(packageName);
+
+  const result = await store[method](options);
+
+  return result;
+};
+```
+
+## API Reference
 <a name="module_bedrock-ssm-mongodb"></a>
 
 ## bedrock-ssm-mongodb
@@ -23,7 +49,6 @@ Generates a new key.
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.controller | <code>string</code> | The ID of the controller of the key. |
 | options.type | <code>string</code> | The type of key (e.g. 'AES-KW', 'HS256'). |
 
 <a name="module_bedrock-ssm-mongodb.wrapKey"></a>
@@ -37,7 +62,6 @@ Wraps a cryptographic key using a key encryption key (KEK).
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.controller | <code>string</code> | The ID of the controller of the key. |
 | options.kekId | <code>string</code> | The ID of the KEK. |
 | options.key | <code>string</code> | The base64url-encoded cryptographic key. |
 
@@ -52,7 +76,6 @@ Unwraps a cryptographic key using a key encryption key (KEK).
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.controller | <code>string</code> | The ID of the controller of the key. |
 | options.kekId | <code>string</code> | The ID of the KEK. |
 | options.wrappedKey | <code>string</code> | The base64url-encoded cryptographic key. |
 
@@ -70,7 +93,6 @@ wisely.
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.controller | <code>string</code> | The ID of the controller of the key. |
 | options.keyId | <code>string</code> | The ID of the signing key to use. |
 | options.data | <code>Uint8Array</code> \| <code>string</code> | The data to sign as a Uint8Array   or a base64url-encoded string. |
 
@@ -88,7 +110,6 @@ wisely.
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.controller | <code>string</code> | The ID of the controller of the key. |
 | options.keyId | <code>string</code> | The ID of the signing key to use. |
 | options.data | <code>Uint8Array</code> \| <code>string</code> | The data to sign as a Uint8Array   or a base64url-encoded string. |
 | options.signature | <code>string</code> | The base64url-encoded signature to   verify. |

@@ -1,4 +1,30 @@
 # bedrock-ssm-mongodb
 
-# API Reference
+## Usage
+This API is designed to be accessed using the
+[bedrock-package-manager](https://github.com/digitalbazaar/bedrock-package-manager#usage)
+API.
+
+```js
+const brPackageManager = require('bedrock-package-manager');
+
+// require this module in the application
+// it registers itself with bedrock-package-manager
+require('bedrock-ssm-mongodb');
+
+// use the API
+exports.callMethod = async ({method, options, plugin}) => {
+  // the alias for bedrock-ssm-mongodb is 'ssm-v1'
+  // the type for bedrock-ssm-mongodb is 'bedrock-kms-store'
+  const {packageName} = brPackageManager.get(
+    {alias: plugin, type: 'bedrock-kms-store'});
+  const store = require(packageName);
+
+  const result = await store[method](options);
+
+  return result;
+};
+```
+
+## API Reference
 {{>main}}
