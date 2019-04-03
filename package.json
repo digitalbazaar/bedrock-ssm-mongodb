@@ -22,7 +22,8 @@
   "homepage": "https://github.com/digitalbazaar/bedrock-ssm-mongodb",
   "dependencies": {
     "assert-plus": "^1.0.0",
-    "base64url-universal": "^1.0.0"
+    "base64url-universal": "^1.0.0",
+    "crypto-ld": "^3.4.1"
   },
   "peerDependencies": {
     "bedrock": "^1.15.0",
