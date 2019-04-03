@@ -6,10 +6,12 @@
     "test": "node --preserve-symlinks test test"
   },
   "dependencies": {
+    "base64url-universal": "^1.0.0",
     "bedrock": "^1.15.0",
     "bedrock-mongodb": "^5.5.0",
     "bedrock-package-manager": "^1.0.0",
     "bedrock-ssm-mongodb": "file:..",
-    "bedrock-test": "^2.1.0"
+    "bedrock-test": "^2.1.0",
+    "crypto-ld": "^3.4.1"
   }
 }
