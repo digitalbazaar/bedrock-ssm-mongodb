@@ -34,7 +34,8 @@ describe('asymmetric keys', () => {
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};
-        const verifyData = uuid();
+        const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+        const verifyData = base64url.encode(plaintextBuffer);
         const key = await brSSM.generateKey(
           {keyId, operation: {invocationTarget}});
 
@@ -48,7 +49,7 @@ describe('asymmetric keys', () => {
 
         const verifier = (await LDKeyPair.from(key)).verifier();
         const result = await verifier.verify({
-          data: Buffer.from(verifyData),
+          data: plaintextBuffer,
           signature: base64url.decode(signatureValue)
         });
         result.should.be.a('boolean');
