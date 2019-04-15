@@ -44,12 +44,13 @@ exports.callMethod = async ({method, options, plugin}) => {
 Generates a new key.
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{id}`.  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - Key information.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.type | <code>string</code> | The type of key (e.g. 'AES-KW', 'HS256'). |
+| options.keyId | <code>string</code> | The key ID to use. |
+| options.operation | <code>Object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.wrapKey"></a>
 
@@ -62,8 +63,8 @@ Wraps a cryptographic key using a key encryption key (KEK).
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.kekId | <code>string</code> | The ID of the KEK. |
-| options.key | <code>string</code> | The base64url-encoded cryptographic key. |
+| options.keyId | <code>string</code> | The key ID to use. |
+| options.operation | <code>Object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.unwrapKey"></a>
 
@@ -71,13 +72,13 @@ Wraps a cryptographic key using a key encryption key (KEK).
 Unwraps a cryptographic key using a key encryption key (KEK).
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{key}`.  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{unwrappedKey}`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.kekId | <code>string</code> | The ID of the KEK. |
-| options.wrappedKey | <code>string</code> | The base64url-encoded cryptographic key. |
+| options.keyId | <code>string</code> | The key ID to use. |
+| options.operation | <code>Object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.sign"></a>
 
@@ -88,13 +89,13 @@ hashing the data first may present interoperability issues so choose
 wisely.
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{signature}`.  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{signatureValue}`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.keyId | <code>string</code> | The ID of the signing key to use. |
-| options.data | <code>Uint8Array</code> \| <code>string</code> | The data to sign as a Uint8Array   or a base64url-encoded string. |
+| options.keyId | <code>string</code> | The key ID to use. |
+| options.operation | <code>Object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.verify"></a>
 
@@ -110,7 +111,6 @@ wisely.
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | The options to use. |
-| options.keyId | <code>string</code> | The ID of the signing key to use. |
-| options.data | <code>Uint8Array</code> \| <code>string</code> | The data to sign as a Uint8Array   or a base64url-encoded string. |
-| options.signature | <code>string</code> | The base64url-encoded signature to   verify. |
+| options.keyId | <code>string</code> | The key ID to use. |
+| options.operation | <code>Object</code> | The KMS operation. |
 
