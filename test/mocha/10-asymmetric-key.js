@@ -13,7 +13,7 @@ describe('asymmetric keys', () => {
     describe('generateKey API', () => {
       it('successfully generates a key pair', async () => {
         // uuid will be generated at the bedrock-kms-http layer
-        const keyId = `https://example.com/ksm/${uuid()}`;
+        const keyId = `https://example.com/kms/${uuid()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};
@@ -30,7 +30,7 @@ describe('asymmetric keys', () => {
 
     describe('sign API', () => {
       it('successfully signs data', async () => {
-        const keyId = `https://example.com/ksm/${uuid()}`;
+        const keyId = `https://example.com/kms/${uuid()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};

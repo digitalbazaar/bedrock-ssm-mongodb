@@ -8,7 +8,7 @@ const brSSM = require('bedrock-ssm-mongodb');
 describe('symmetric keys', () => {
   describe('generateKey API', () => {
     it('returns a key id for type Sha256HmacKey2019', async () => {
-      const keyId = 'https://example.com/ksm/ssm-v1/my-hmac-key';
+      const keyId = 'https://example.com/kms/my-hmac-key';
       const controller = 'https://example.com/i/foo';
       const type = 'Sha256HmacKey2019';
       const invocationTarget = {id: keyId, type, controller};
@@ -20,7 +20,7 @@ describe('symmetric keys', () => {
       result.id.should.be.a('string');
     });
     it('returns a key id for type AesKeyWrappingKey2019', async () => {
-      const keyId = 'https://example.com/ksm/ssm-v1/my-kek';
+      const keyId = 'https://example.com/kms/my-kek';
       const controller = 'https://example.com/i/foo';
       const type = 'AesKeyWrappingKey2019';
       const invocationTarget = {id: keyId, type, controller};
