@@ -37,8 +37,8 @@
     "node": ">=8.9.0"
   },
   "devDependencies": {
-    "eslint": "^5.13.0",
-    "eslint-config-digitalbazaar": "^2.0.0",
+    "eslint": "^6.6.0",
+    "eslint-config-digitalbazaar": "^2.0.1",
     "eslint-plugin-jsdoc": "^4.4.0",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1"
