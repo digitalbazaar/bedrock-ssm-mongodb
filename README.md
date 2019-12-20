@@ -15,9 +15,9 @@ require('bedrock-ssm-mongodb');
 // use the API
 exports.callMethod = async ({method, options, plugin}) => {
   // the alias for bedrock-ssm-mongodb is 'ssm-v1'
-  // the type for bedrock-ssm-mongodb is 'web-kms-module'
+  // the type for bedrock-ssm-mongodb is 'webkms-module'
   const {packageName} = brPackageManager.get(
-    {alias: plugin, type: 'web-kms-module'});
+    {alias: plugin, type: 'webkms-module'});
   const store = require(packageName);
 
   const result = await store[method](options);
