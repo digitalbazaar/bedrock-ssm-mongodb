@@ -29,7 +29,7 @@
     "tweetnacl": "^1.0.1"
   },
   "peerDependencies": {
-    "bedrock": "^1.15.0 - 3.x",
+    "bedrock": "1.15.0 - 3.x",
     "bedrock-mongodb": "5.5.0 - 6.x",
     "bedrock-package-manager": "^1.0.0"
   },
