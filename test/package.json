@@ -3,15 +3,29 @@
   "version": "0.0.1-0",
   "private": true,
   "scripts": {
-    "test": "node --preserve-symlinks test test"
+    "test": "node --preserve-symlinks test.js test",
+    "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm test",
+    "coverage-ci": "cross-env NODE_ENV=test nyc --reporter=text-lcov npm test > coverage.lcov",
+    "coverage-report": "nyc report"
   },
   "dependencies": {
     "base64url-universal": "^1.0.0",
-    "bedrock": "^1.15.0",
-    "bedrock-mongodb": "^5.5.0",
+    "bedrock": "^3.0.0",
+    "bedrock-mongodb": "^6.0.0",
     "bedrock-package-manager": "^1.0.0",
     "bedrock-ssm-mongodb": "file:..",
-    "bedrock-test": "^2.1.0",
-    "crypto-ld": "^3.4.1"
+    "bedrock-test": "^5.0.0",
+    "cross-env": "^7.0.2",
+    "crypto-ld": "^3.4.1",
+    "nyc": "^15.0.1"
+  },
+  "nyc": {
+    "excludeNodeModules": false,
+    "include": [
+      "node_modules/bedrock-ssm-mongodb/**"
+    ],
+    "exclude": [
+      "node_modules/bedrock-ssm-mongodb/node_modules/**"
+    ]
   }
 }
