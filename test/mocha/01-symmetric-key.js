@@ -4,6 +4,7 @@
 'use strict';
 
 const brSSM = require('bedrock-ssm-mongodb');
+const {util: {uuid}} = require('bedrock');
 
 describe('AesKeyWrappingKey2019', () => {
   describe('generateKey API', () => {
@@ -64,6 +65,57 @@ describe('AesKeyWrappingKey2019', () => {
         result.signatureValue.should.be.a('string');
         result.signatureValue.should.have.length.gt(0);
       });
+      it('successfully signs data', async () => {
+        const operation = {
+          verifyData: '2eb221b8-1777-417a-8f3a-05cdd030de12',
+        };
+        let err;
+        let result;
+        try {
+          result = await brSSM.sign({keyId, operation});
+        } catch(e) {
+          err = e;
+        }
+        assertNoError(err);
+        should.exist(result);
+        result.should.be.an('object');
+        result.should.have.property('signatureValue');
+        result.signatureValue.should.be.a('string');
+        result.signatureValue.should.have.length.gt(0);
+      });
+      describe('bulk operations', () => {
+        const operationCount = 10000;
+        const vData = [];
+        before(async () => {
+          for(let i = 0; i < operationCount; ++i) {
+            let v = '';
+            for(let n = 0; n < 100; ++n) {
+              v += uuid();
+            }
+            vData.push(v);
+          }
+        });
+        it(`performs ${operationCount} signatures`, async function() {
+          this.timeout(0);
+          const promises = [];
+          for(let i = 0; i < operationCount; ++i) {
+            const operation = {verifyData: vData[i]};
+            promises.push(brSSM.sign({keyId, operation}));
+          }
+          let result;
+          let err;
+          try {
+            result = await Promise.all(promises);
+          } catch(e) {
+            err = e;
+          }
+          assertNoError(err);
+          should.exist(result);
+          result.should.be.an('array');
+          result.should.have.length(operationCount);
+        });
+      }); // end bulk operations
+
     }); // end sign API
   }); // end Sha256HmacKey2019
 });
