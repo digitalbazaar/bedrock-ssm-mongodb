@@ -1,11 +1,11 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 2.1.0 -
+## 3.0.0 -
 
 ### Changed
-  - peerDependency for `bedrock-mongodb` is now 7.0.0
-  - Changed api calls from `insert` to `insertOne`
-  - Update test dependencies to `bedrock-mongodb: ^7.0.0`
+  - **BREAKING**: Upgrade to `bedrock-mongodb` ^7.0.0.
+  - Changed api calls from `insert` to `insertOne`.
+  - Update test dependencies to `bedrock-mongodb: ^7.0.0.
 
 ## 2.0.1 - 2020-01-22
 
