@@ -11,7 +11,7 @@
   "dependencies": {
     "base64url-universal": "^1.0.0",
     "bedrock": "^3.0.0",
-    "bedrock-mongodb": "^6.0.0",
+    "bedrock-mongodb": "^7.0.0",
     "bedrock-package-manager": "^1.0.0",
     "bedrock-ssm-mongodb": "file:..",
     "bedrock-test": "^5.0.0",

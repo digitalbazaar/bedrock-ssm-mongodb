@@ -30,16 +30,16 @@
   },
   "peerDependencies": {
     "bedrock": "1.15.0 - 3.x",
-    "bedrock-mongodb": "5.5.0 - 6.x",
+    "bedrock-mongodb": "^7.0.0",
     "bedrock-package-manager": "^1.0.0"
   },
   "engines": {
-    "node": ">=8.9.0"
+    "node": ">=10.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^7.2.0",
     "eslint-config-digitalbazaar": "^2.0.1",
-    "eslint-plugin-jsdoc": "^4.4.0",
+    "eslint-plugin-jsdoc": "^27.0.4",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1"
   }

@@ -1,5 +1,12 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 3.0.0 -
+
+### Changed
+  - **BREAKING**: Upgrade to `bedrock-mongodb` ^7.0.0.
+  - Changed api calls from `insert` to `insertOne`.
+  - Update test dependencies to `bedrock-mongodb: ^7.0.0.
+
 ## 2.0.1 - 2020-01-22
 
 ### Fixed
