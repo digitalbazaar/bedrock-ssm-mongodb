@@ -1,5 +1,13 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 3.1.0 - 2020-07-07
+
+### Changed
+- Update peer deps, test deps and CI workflow.
+
+### Fixed
+- Fix usage of the MongoDB projection API.
+
 ## 3.0.0 - 2020-06-09
 
 ### Changed
