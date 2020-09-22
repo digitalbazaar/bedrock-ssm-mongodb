@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 3.2.0 - 2020-09-xx
+## 3.2.0 - 2020-09-22
 
 ### Added
 - Add cache for key records.
