@@ -31,7 +31,7 @@
   },
   "peerDependencies": {
     "bedrock": "1.15.0 - 3.x",
-    "bedrock-mongodb": "^7.1.0",
+    "bedrock-mongodb": "^8.0.0",
     "bedrock-package-manager": "^1.0.0"
   },
   "engines": {
