@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 3.2.1 - 2020-09-xx
+## 3.2.1 - 2020-09-25
 
 ### Fixed
 - Add and apply max age for cache for key records. Without
