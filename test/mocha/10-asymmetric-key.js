@@ -44,27 +44,79 @@ describe('asymmetric keys', () => {
         const invocationTarget = {id: keyId, type, controller};
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
         const verifyData = base64url.encode(plaintextBuffer);
-        await brSSM.generateKey(
+        const publicKey = await brSSM.generateKey(
           {keyId, operation: {invocationTarget}});
 
         const signResult = await brSSM.sign(
           {keyId, operation: {invocationTarget, verifyData}});
+
         should.exist(signResult);
         signResult.should.be.an('object');
         Object.keys(signResult).should.have.same.members(['signatureValue']);
         const {signatureValue} = signResult;
         signatureValue.should.be.a('string');
 
-        const keyPair = await cryptoLd.generate({type});
+        const keyPair = await cryptoLd.from(publicKey);
         const {verify} = keyPair.verifier();
         const valid = await verify({
           data: plaintextBuffer,
           signature: base64url.decode(signatureValue)
         });
-        console.log(valid, '<><><><>valid');
+
         valid.should.be.a('boolean');
-        valid.should.be.false;
+        valid.should.be.true;
       });
     }); // end sign API
   }); // end Ed25519VerificationKey2018
+  describe('Ed25519VerificationKey2020', () => {
+    describe('generateKey API', () => {
+      it('successfully generates a key pair', async () => {
+        // uuid will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${uuid()}`;
+        const controller = 'https://example.com/i/foo';
+        const type = 'Ed25519VerificationKey2020';
+        const invocationTarget = {id: keyId, type, controller};
+        const result = await brSSM.generateKey(
+          {keyId, operation: {invocationTarget}});
+        should.exist(result);
+        result.should.be.an('object');
+        Object.keys(result).should.have.same.members(
+          ['id', 'publicKeyMultibase', 'type']);
+        result.id.should.equal(keyId);
+        result.type.should.equal(type);
+      });
+    }); // end generateKey API
+
+    describe('sign API', () => {
+      it('successfully signs data', async () => {
+        const keyId = `https://example.com/kms/${uuid()}`;
+        const controller = 'https://example.com/i/foo';
+        const type = 'Ed25519VerificationKey2020';
+        const invocationTarget = {id: keyId, type, controller};
+        const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+        const verifyData = base64url.encode(plaintextBuffer);
+        const publicKey = await brSSM.generateKey(
+          {keyId, operation: {invocationTarget}});
+
+        const signResult = await brSSM.sign(
+          {keyId, operation: {invocationTarget, verifyData}});
+
+        should.exist(signResult);
+        signResult.should.be.an('object');
+        Object.keys(signResult).should.have.same.members(['signatureValue']);
+        const {signatureValue} = signResult;
+        signatureValue.should.be.a('string');
+
+        const keyPair = await cryptoLd.from(publicKey);
+        const {verify} = keyPair.verifier();
+        const valid = await verify({
+          data: plaintextBuffer,
+          signature: base64url.decode(signatureValue)
+        });
+
+        valid.should.be.a('boolean');
+        valid.should.be.true;
+      });
+    }); // end sign API
+  }); // end Ed25519VerificationKey2020
 });
