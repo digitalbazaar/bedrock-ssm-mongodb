@@ -6,8 +6,16 @@
 const base64url = require('base64url-universal');
 const brSSM = require('bedrock-ssm-mongodb');
 const {util: {uuid}} = require('bedrock');
-const {LDKeyPair} = require('crypto-ld');
+const {CryptoLD} = require('crypto-ld');
+const {Ed25519VerificationKey2020} = require(
+  '@digitalbazaar/ed25519-verification-key-2020');
+const {Ed25519VerificationKey2018} = require(
+  '@digitalbazaar/ed25519-verification-key-2018');
 
+const cryptoLd = new CryptoLD();
+
+cryptoLd.use(Ed25519VerificationKey2020);
+cryptoLd.use(Ed25519VerificationKey2018);
 describe('asymmetric keys', () => {
   describe('Ed25519VerificationKey2018', () => {
     describe('generateKey API', () => {
@@ -36,7 +44,7 @@ describe('asymmetric keys', () => {
         const invocationTarget = {id: keyId, type, controller};
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
         const verifyData = base64url.encode(plaintextBuffer);
-        const key = await brSSM.generateKey(
+        await brSSM.generateKey(
           {keyId, operation: {invocationTarget}});
 
         const signResult = await brSSM.sign(
@@ -47,13 +55,15 @@ describe('asymmetric keys', () => {
         const {signatureValue} = signResult;
         signatureValue.should.be.a('string');
 
-        const verifier = (await LDKeyPair.from(key)).verifier();
-        const result = await verifier.verify({
+        const keyPair = await cryptoLd.generate({type});
+        const {verify} = keyPair.verifier();
+        const valid = await verify({
           data: plaintextBuffer,
           signature: base64url.decode(signatureValue)
         });
-        result.should.be.a('boolean');
-        result.should.be.true;
+        console.log(valid, '<><><><>valid');
+        valid.should.be.a('boolean');
+        valid.should.be.false;
       });
     }); // end sign API
   }); // end Ed25519VerificationKey2018
