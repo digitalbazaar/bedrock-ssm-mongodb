@@ -3,7 +3,7 @@
 ## 4.0.0 - 2021-04-TBD
 
 ### Changed
-- Remove support for node 10.
+- **BREAKING**: Remove support for node 10.
 ### Added
 - Add Ed25519VerificationKey2020 to asymmetric key types.
 
