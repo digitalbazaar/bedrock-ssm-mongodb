@@ -1,11 +1,12 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 4.0.0 - 2021-04-TBD
+## 4.0.0 - 2021-04-08
 
 ### Changed
 - **BREAKING**: Remove support for node 10.
+
 ### Added
-- Add Ed25519VerificationKey2020 to asymmetric key types.
+- Add `Ed25519VerificationKey2020` to asymmetric key types.
 
 ## 3.2.1 - 2020-09-25
 
