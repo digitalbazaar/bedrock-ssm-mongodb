@@ -32,84 +32,103 @@ exports.callMethod = async ({method, options, plugin}) => {
 ## bedrock-ssm-mongodb
 
 * [bedrock-ssm-mongodb](#module_bedrock-ssm-mongodb)
-    * [.generateKey(options)](#module_bedrock-ssm-mongodb.generateKey) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.wrapKey(options)](#module_bedrock-ssm-mongodb.wrapKey) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.unwrapKey(options)](#module_bedrock-ssm-mongodb.unwrapKey) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.sign(options)](#module_bedrock-ssm-mongodb.sign) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.verify(options)](#module_bedrock-ssm-mongodb.verify) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.generateKey(options)](#module_bedrock-ssm-mongodb.generateKey) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.wrapKey(options)](#module_bedrock-ssm-mongodb.wrapKey) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.unwrapKey(options)](#module_bedrock-ssm-mongodb.unwrapKey) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.sign(options)](#module_bedrock-ssm-mongodb.sign) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.verify(options)](#module_bedrock-ssm-mongodb.verify) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.deriveSecret(options)](#module_bedrock-ssm-mongodb.deriveSecret) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="module_bedrock-ssm-mongodb.generateKey"></a>
 
-### bedrock-ssm-mongodb.generateKey(options) ⇒ <code>Promise.&lt;Object&gt;</code>
+### bedrock-ssm-mongodb.generateKey(options) ⇒ <code>Promise.&lt;object&gt;</code>
 Generates a new key.
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - Key information.  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Key information.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | <code>Object</code> | The options to use. |
+| options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
-| options.operation | <code>Object</code> | The KMS operation. |
+| options.operation | <code>object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.wrapKey"></a>
 
-### bedrock-ssm-mongodb.wrapKey(options) ⇒ <code>Promise.&lt;Object&gt;</code>
+### bedrock-ssm-mongodb.wrapKey(options) ⇒ <code>Promise.&lt;object&gt;</code>
 Wraps a cryptographic key using a key encryption key (KEK).
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{wrappedKey}`.  
+**Returns**: <code>Promise.&lt;object&gt;</code> - An object containing `{wrappedKey}`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | <code>Object</code> | The options to use. |
+| options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
-| options.operation | <code>Object</code> | The KMS operation. |
+| options.operation | <code>object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.unwrapKey"></a>
 
-### bedrock-ssm-mongodb.unwrapKey(options) ⇒ <code>Promise.&lt;Object&gt;</code>
+### bedrock-ssm-mongodb.unwrapKey(options) ⇒ <code>Promise.&lt;object&gt;</code>
 Unwraps a cryptographic key using a key encryption key (KEK).
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{unwrappedKey}`.  
+**Returns**: <code>Promise.&lt;object&gt;</code> - An object containing `{unwrappedKey}`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | <code>Object</code> | The options to use. |
+| options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
-| options.operation | <code>Object</code> | The KMS operation. |
+| options.operation | <code>object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.sign"></a>
 
-### bedrock-ssm-mongodb.sign(options) ⇒ <code>Promise.&lt;Object&gt;</code>
+### bedrock-ssm-mongodb.sign(options) ⇒ <code>Promise.&lt;object&gt;</code>
 Signs some data. Note that the data will be sent to the server, so if
 this data is intended to be secret it should be hashed first. However,
 hashing the data first may present interoperability issues so choose
 wisely.
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{signatureValue}`.  
+**Returns**: <code>Promise.&lt;object&gt;</code> - An object containing `{signatureValue}`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | <code>Object</code> | The options to use. |
+| options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
-| options.operation | <code>Object</code> | The KMS operation. |
+| options.operation | <code>object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.verify"></a>
 
-### bedrock-ssm-mongodb.verify(options) ⇒ <code>Promise.&lt;Object&gt;</code>
+### bedrock-ssm-mongodb.verify(options) ⇒ <code>Promise.&lt;object&gt;</code>
 Verifies some data. Note that the data will be sent to the server, so if
 this data is intended to be secret it should be hashed first. However,
 hashing the data first may present interoperability issues so choose
 wisely.
 
 **Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - An object containing `{verified}`.  
+**Returns**: <code>Promise.&lt;object&gt;</code> - An object containing `{verified}`.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| options | <code>Object</code> | The options to use. |
+| options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
-| options.operation | <code>Object</code> | The KMS operation. |
+| options.operation | <code>object</code> | The KMS operation. |
+
+<a name="module_bedrock-ssm-mongodb.deriveSecret"></a>
+
+### bedrock-ssm-mongodb.deriveSecret(options) ⇒ <code>Promise.&lt;object&gt;</code>
+Derives a shared secret via the given peer public key, typically for use
+as one parameter for computing a shared key. It should not be used as
+a shared key itself, but rather input into a key derivation function (KDF)
+to produce a shared key.
+
+**Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - An object containing `{secret}`.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | The options to use. |
+| options.keyId | <code>string</code> | The key ID to use. |
+| options.operation | <code>object</code> | The KMS operation. |
+
