@@ -29,8 +29,7 @@ describe('asymmetric keys', () => {
           {keyId, operation: {invocationTarget}});
         should.exist(result);
         result.should.be.an('object');
-        Object.keys(result).should.have.same.members(
-          ['id', 'publicKeyBase58', 'type']);
+        result.should.have.keys(['id', 'publicKeyBase58', 'type']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
@@ -80,8 +79,7 @@ describe('asymmetric keys', () => {
           {keyId, operation: {invocationTarget}});
         should.exist(result);
         result.should.be.an('object');
-        Object.keys(result).should.have.same.members(
-          ['id', 'publicKeyMultibase', 'type']);
+        result.should.have.keys(['id', 'publicKeyMultibase', 'type']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
