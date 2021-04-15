@@ -117,4 +117,44 @@ describe('asymmetric keys', () => {
       });
     }); // end sign API
   }); // end Ed25519VerificationKey2020
+
+  describe('X25519KeyAgreementKey2020', () => {
+    describe('generateKey API', () => {
+      it('successfully generates a key pair', async () => {
+        // uuid will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${uuid()}`;
+        const controller = 'https://example.com/i/foo';
+        const type = 'X25519KeyAgreementKey2020';
+        const invocationTarget = {id: keyId, type, controller};
+        const result = await brSSM.generateKey(
+          {keyId, operation: {invocationTarget}});
+        should.exist(result);
+
+        result.should.be.an('object');
+        result.should.have.keys(['id', 'publicKeyMultibase', 'type']);
+        result.id.should.equal(keyId);
+        result.type.should.equal(type);
+      });
+    }); // end generateKey API
+
+    describe('deriveSecret API', () => {
+      it('successfully derives secret from public key', async () => {
+        const keyId = `https://example.com/kms/${uuid()}`;
+        const controller = 'https://example.com/i/foo';
+        const type = 'X25519KeyAgreementKey2020';
+        const invocationTarget = {id: keyId, type, controller};
+        const publicKey = await brSSM.generateKey(
+          {keyId, operation: {invocationTarget}});
+
+        const result = await brSSM.deriveSecret(
+          {keyId, operation: {invocationTarget, publicKey}});
+
+        should.exist(result);
+        result.should.be.an('object');
+        Object.keys(result).should.have.same.members(['secret']);
+        const {secret} = result;
+        secret.should.be.a('string');
+      });
+    }); // end sign API
+  });
 });
