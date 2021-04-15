@@ -1,5 +1,14 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 5.0.0 -
+
+### Changed
+- **BREAKING**: Use `webkms-context` url instead of security context v2.
+- **BREAKING**: Replace X25519KeyAgreementKey2019 with X25519KeyAgreementKey2020
+  suite for key agreement operations.
+- **BREAKING**: Replace the local derived secret (based on scalarMult) with
+  the X25519KeyAgreementKey2020 key pair's own `deriveSecret()`.
+
 ## 4.0.0 - 2021-04-08
 
 ### Changed
