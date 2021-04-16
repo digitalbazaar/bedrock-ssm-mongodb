@@ -6,21 +6,29 @@
 const brSSM = require('bedrock-ssm-mongodb');
 const {util: {uuid}} = require('bedrock');
 
-describe('AesKeyWrappingKey2019', () => {
-  describe('generateKey API', () => {
-    it('returns a key id for type AesKeyWrappingKey2019', async () => {
-      const keyId = 'https://example.com/kms/my-kek';
-      const controller = 'https://example.com/i/foo';
-      const type = 'AesKeyWrappingKey2019';
-      const invocationTarget = {id: keyId, type, controller};
-      const result = await brSSM.generateKey(
-        {keyId, operation: {invocationTarget}});
-      should.exist(result);
-      result.should.be.an('object');
-      result.should.have.property('id');
-      result.id.should.be.a('string');
-    });
-  }); // end generateKey API
+describe('symmetric keys', () => {
+  describe('AesKeyWrappingKey2019', () => {
+    describe('generateKey API', () => {
+      it('returns a key id for type AesKeyWrappingKey2019', async () => {
+        const keyId = 'https://example.com/kms/my-kek';
+        const controller = 'https://example.com/i/foo';
+        const type = 'AesKeyWrappingKey2019';
+        const invocationTarget = {id: keyId, type, controller};
+        const result = await brSSM.generateKey(
+          {keyId, operation: {invocationTarget}});
+        should.exist(result);
+
+        result.should.be.an('object');
+        result.should.have.property('id', keyId);
+        result.should.have.property('type', type);
+        result.should.have.property('@context');
+        result['@context'].should.eql([
+          'https://w3id.org/webkms/v1',
+          'https://w3id.org/security/aes-key-wrapping-2019/v1'
+        ]);
+      });
+    }); // end generateKey API
+  });
 
   describe('Sha256HmacKey2019', () => {
     describe('generateKey API', () => {
@@ -33,8 +41,13 @@ describe('AesKeyWrappingKey2019', () => {
           {keyId, operation: {invocationTarget}});
         should.exist(result);
         result.should.be.an('object');
-        result.should.have.property('id');
-        result.id.should.be.a('string');
+        result.should.have.property('id', keyId);
+        result.should.have.property('type', type);
+        result.should.have.property('@context');
+        result['@context'].should.eql([
+          'https://w3id.org/webkms/v1',
+          'https://w3id.org/security/sha256-hmac-2019/v1'
+        ]);
       });
     }); // end generateKey API
 
