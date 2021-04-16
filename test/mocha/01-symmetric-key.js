@@ -24,7 +24,7 @@ describe('symmetric keys', () => {
         result.should.have.property('@context');
         result['@context'].should.eql([
           'https://w3id.org/webkms/v1',
-          'https://w3id.org/security/suites/aes-key-wrapping-2019/v1'
+          'https://w3id.org/security/suites/aes-2019/v1'
         ]);
       });
     }); // end generateKey API
@@ -46,7 +46,7 @@ describe('symmetric keys', () => {
         result.should.have.property('@context');
         result['@context'].should.eql([
           'https://w3id.org/webkms/v1',
-          'https://w3id.org/security/suites/sha256-hmac-2019/v1'
+          'https://w3id.org/security/suites/hmac-2019/v1'
         ]);
       });
     }); // end generateKey API
