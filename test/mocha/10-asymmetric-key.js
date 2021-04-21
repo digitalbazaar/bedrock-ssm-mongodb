@@ -29,7 +29,7 @@ describe('asymmetric keys', () => {
           {keyId, operation: {invocationTarget}});
         should.exist(result);
         result.should.be.an('object');
-        result.should.have.keys(['id', 'publicKeyBase58', 'type']);
+        result.should.have.keys(['@context', 'id', 'publicKeyBase58', 'type']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
@@ -51,7 +51,7 @@ describe('asymmetric keys', () => {
 
         should.exist(signResult);
         signResult.should.be.an('object');
-        Object.keys(signResult).should.have.same.members(['signatureValue']);
+        signResult.should.have.keys(['signatureValue']);
         const {signatureValue} = signResult;
         signatureValue.should.be.a('string');
 
@@ -79,7 +79,8 @@ describe('asymmetric keys', () => {
           {keyId, operation: {invocationTarget}});
         should.exist(result);
         result.should.be.an('object');
-        result.should.have.keys(['id', 'publicKeyMultibase', 'type']);
+        result.should.have.keys([
+          '@context', 'id', 'publicKeyMultibase', 'type']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
@@ -101,7 +102,7 @@ describe('asymmetric keys', () => {
 
         should.exist(signResult);
         signResult.should.be.an('object');
-        Object.keys(signResult).should.have.same.members(['signatureValue']);
+        signResult.should.have.keys(['signatureValue']);
         const {signatureValue} = signResult;
         signatureValue.should.be.a('string');
 
@@ -151,7 +152,7 @@ describe('asymmetric keys', () => {
 
         should.exist(result);
         result.should.be.an('object');
-        Object.keys(result).should.have.same.members(['secret']);
+        result.should.have.keys(['secret']);
         const {secret} = result;
         secret.should.be.a('string');
       });
