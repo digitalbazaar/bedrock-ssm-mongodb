@@ -8,7 +8,8 @@
   suite for key agreement operations.
 - **BREAKING**: Replace the local derived secret (based on scalarMult) with
   the X25519KeyAgreementKey2020 key pair's own `deriveSecret()`.
-
+- Use [`aes-key-wrapping-2019-context@1.0.3`](https://github.com/digitalbazaar/aes-key-wrapping-2019-context/blob/main/CHANGELOG.md).
+- Use [`sha256-hmac-key-2019-context@1.0.3`](https://github.com/digitalbazaar/sha256-hmac-key-2019-context/blob/main/CHANGELOG.md).
 ## 4.0.0 - 2021-04-08
 
 ### Changed
