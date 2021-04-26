@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 5.0.0 -
+## 5.0.0 - 2021-04-26
 
 ### Changed
 - **BREAKING**: Use `webkms-context` url instead of security context v2.
