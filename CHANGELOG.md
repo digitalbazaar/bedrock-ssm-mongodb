@@ -1,5 +1,13 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 6.0.0 - 2021-05-xx
+
+### Added
+- Add `getKeyDescription` API.
+
+### Changed
+- **BREAKING**: Store `@context` with keys.
+
 ## 5.0.0 - 2021-04-26
 
 ### Changed
