@@ -1,12 +1,16 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 6.0.0 - 2021-05-xx
+## 6.0.0 - 2021-xx-xx
 
 ### Added
 - Add `getKeyDescription` API.
+- Add `getKeyCount` API.
 
 ### Changed
 - **BREAKING**: Store `@context` with keys.
+- **BREAKING**: Key records are indexed by both keystore ID and local ID
+  with the format: `keyId == <keystoreId>/<localId>`. Databases must be
+  dropped to upgrade to the new format.
 
 ## 5.0.0 - 2021-04-26
 
