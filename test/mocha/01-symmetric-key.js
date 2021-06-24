@@ -5,12 +5,14 @@
 
 const brSSM = require('bedrock-ssm-mongodb');
 const {util: {uuid}} = require('bedrock');
+const {generateId} = require('bnid');
 
 describe('symmetric keys', () => {
   describe('AesKeyWrappingKey2019', () => {
     describe('generateKey API', () => {
       it('returns a key id for type AesKeyWrappingKey2019', async () => {
-        const keyId = 'https://example.com/kms/my-kek';
+        // keyId will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'AesKeyWrappingKey2019';
         const invocationTarget = {id: keyId, type, controller};
@@ -33,7 +35,8 @@ describe('symmetric keys', () => {
   describe('Sha256HmacKey2019', () => {
     describe('generateKey API', () => {
       it('returns a key id for type Sha256HmacKey2019', async () => {
-        const keyId = 'https://example.com/kms/my-hmac-key';
+        // keyId will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
         const invocationTarget = {id: keyId, type, controller};
@@ -52,9 +55,10 @@ describe('symmetric keys', () => {
     }); // end generateKey API
 
     describe('sign API', () => {
-      const keyId =
-        'https://example.com/kms/01d832b0-92fe-40ca-aea7-44f49c0c83c6';
+      let keyId;
       before(async () => {
+        // keyId will be generated at the bedrock-kms-http layer
+        keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
         const invocationTarget = {id: keyId, type, controller};
