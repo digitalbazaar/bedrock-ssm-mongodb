@@ -105,8 +105,9 @@ describe('symmetric keys', () => {
         const vData = [];
         before(async () => {
           for(let i = 0; i < operationCount; ++i) {
+            // uuids are 37 chars long, * 30 is ~1KiB
             let v = '';
-            for(let n = 0; n < 100; ++n) {
+            for(let n = 0; n < 30; ++n) {
               v += uuid();
             }
             vData.push(v);
