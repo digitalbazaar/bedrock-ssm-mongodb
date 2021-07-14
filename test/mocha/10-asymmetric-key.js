@@ -4,13 +4,14 @@
 'use strict';
 
 const base64url = require('base64url-universal');
-const brSSM = require('bedrock-ssm-mongodb');
 const {util: {uuid}} = require('bedrock');
+const brSSM = require('bedrock-ssm-mongodb');
 const {CryptoLD} = require('crypto-ld');
 const {Ed25519VerificationKey2020} = require(
   '@digitalbazaar/ed25519-verification-key-2020');
 const {Ed25519VerificationKey2018} = require(
   '@digitalbazaar/ed25519-verification-key-2018');
+const {generateId} = require('bnid');
 
 const cryptoLd = new CryptoLD();
 
@@ -20,8 +21,8 @@ describe('asymmetric keys', () => {
   describe('Ed25519VerificationKey2018', () => {
     describe('generateKey API', () => {
       it('successfully generates a key pair', async () => {
-        // uuid will be generated at the bedrock-kms-http layer
-        const keyId = `https://example.com/kms/${uuid()}`;
+        // keyId will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};
@@ -37,7 +38,8 @@ describe('asymmetric keys', () => {
 
     describe('sign API', () => {
       it('successfully signs data', async () => {
-        const keyId = `https://example.com/kms/${uuid()}`;
+        // keyId will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};
@@ -70,8 +72,8 @@ describe('asymmetric keys', () => {
   describe('Ed25519VerificationKey2020', () => {
     describe('generateKey API', () => {
       it('successfully generates a key pair', async () => {
-        // uuid will be generated at the bedrock-kms-http layer
-        const keyId = `https://example.com/kms/${uuid()}`;
+        // keyId will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2020';
         const invocationTarget = {id: keyId, type, controller};
@@ -88,7 +90,8 @@ describe('asymmetric keys', () => {
 
     describe('sign API', () => {
       it('successfully signs data', async () => {
-        const keyId = `https://example.com/kms/${uuid()}`;
+        // keyId will be generated at the bedrock-kms-http layer
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2020';
         const invocationTarget = {id: keyId, type, controller};
@@ -123,7 +126,7 @@ describe('asymmetric keys', () => {
     describe('generateKey API', () => {
       it('successfully generates a key pair', async () => {
         // uuid will be generated at the bedrock-kms-http layer
-        const keyId = `https://example.com/kms/${uuid()}`;
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'X25519KeyAgreementKey2020';
         const invocationTarget = {id: keyId, type, controller};
@@ -140,7 +143,7 @@ describe('asymmetric keys', () => {
 
     describe('deriveSecret API', () => {
       it('successfully derives secret from public key', async () => {
-        const keyId = `https://example.com/kms/${uuid()}`;
+        const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'X25519KeyAgreementKey2020';
         const invocationTarget = {id: keyId, type, controller};
