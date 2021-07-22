@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 6.0.0 - 2021-xx-xx
+## 6.0.0 - 2021-07-22
 
 ### Added
 - Add `getKeyDescription` API.
