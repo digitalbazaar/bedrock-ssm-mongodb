@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 6.0.1 - 2021-08-xx
+
+### Fixed
+- Ensure `@context` is present on key agreement public keys.
+
 ## 6.0.0 - 2021-07-22
 
 ### Added

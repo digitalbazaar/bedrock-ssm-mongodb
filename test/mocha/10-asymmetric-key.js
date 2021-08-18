@@ -135,7 +135,8 @@ describe('asymmetric keys', () => {
         should.exist(result);
 
         result.should.be.an('object');
-        result.should.have.keys(['id', 'publicKeyMultibase', 'type']);
+        result.should.have.keys([
+          '@context', 'id', 'publicKeyMultibase', 'type']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
