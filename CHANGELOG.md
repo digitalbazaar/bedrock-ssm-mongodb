@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 5.0.1 - 2021-08-xx
+
+### Fixed
+- Update ed25519* modules to fixed versions.
+
 ## 5.0.0 - 2021-04-26
 
 ### Changed
