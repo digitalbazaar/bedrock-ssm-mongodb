@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 6.0.2 - 2021-09-01
+
+### Fixed
+- Strip multicodec header from webkms local ID.
+
 ## 6.0.1 - 2021-08-18
 
 ### Fixed
