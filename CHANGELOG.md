@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 6.1.0 - TBD
+## 6.1.0 - 2021-12-14
 
 ### Changed
 - Expose helper functions in order to properly test them.
