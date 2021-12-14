@@ -3,7 +3,7 @@
  */
 'use strict';
 
-exports.getKeystoreId = function({id}) {
+exports.localId = function({id}) {
   const idx = id.lastIndexOf('/');
   return id.substring(0, idx);
 };
