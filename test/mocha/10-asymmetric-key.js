@@ -25,7 +25,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -42,7 +42,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'Ed25519VerificationKey2018';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -68,7 +68,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
         const verifyData = base64url.encode(plaintextBuffer);
         const publicKey = await brSSM.generateKey(
@@ -102,7 +102,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'Ed25519VerificationKey2018';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -130,7 +130,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'Ed25519VerificationKey2018';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -158,7 +158,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'Ed25519VerificationKey2018';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -191,7 +191,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2018';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -261,7 +261,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2020';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
         should.exist(result);
@@ -279,7 +279,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Ed25519VerificationKey2020';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
         const verifyData = base64url.encode(plaintextBuffer);
         const publicKey = await brSSM.generateKey(
@@ -314,7 +314,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'X25519KeyAgreementKey2020';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -331,7 +331,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'X25519KeyAgreementKey2020';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -357,7 +357,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'X25519KeyAgreementKey2020';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const publicKey = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -379,7 +379,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'X25519KeyAgreementKey2020';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -401,7 +401,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'X25519KeyAgreementKey2020';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -428,7 +428,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'X25519KeyAgreementKey2020';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -454,7 +454,7 @@ describe('asymmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'X25519KeyAgreementKey2020';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -484,7 +484,7 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'X25519KeyAgreementKey2020';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
