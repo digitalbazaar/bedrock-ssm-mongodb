@@ -1,5 +1,16 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 7.0.0 - 2022-01-xx
+
+### Changed
+- **BREAKING**: Override `id` in public key description if `publicAlias` is
+  set on key.
+- **BREAKING**: Require `publicAlias` to be set on a key in order for it to
+  be used. During `generateKey()`, a `publicAlias` or a `publicAliasTemplate`
+  may be passed to create a key. If not provided, then a `publicAlias` can
+  later be provided via an `UpdateKeyOperation` that includes a `publicAlias`
+  value for the key.
+
 ## 6.1.0 - 2021-12-14
 
 ### Changed
