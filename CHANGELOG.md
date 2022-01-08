@@ -7,9 +7,11 @@
   set on key.
 - **BREAKING**: Require `publicAlias` to be set on a key in order for it to
   be used. During `generateKey()`, a `publicAlias` or a `publicAliasTemplate`
-  may be passed to create a key. If not provided, then a `publicAlias` can
-  later be provided via an `UpdateKeyOperation` that includes a `publicAlias`
-  value for the key.
+  may be passed to create a key. If not provided, then a `publicAlias` or
+  `publicAliasTemplate` can later be provided via an `UpdateKeyOperation`
+  that includes a `publicAlias` or `publicAliasTemplate` value for the key.
+- **BREAKING**: Require `controller` to be passed when generating a key or
+  getting a key description.
 
 ## 6.1.0 - 2021-12-14
 

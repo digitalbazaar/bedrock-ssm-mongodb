@@ -18,7 +18,7 @@ describe('symmetric keys', () => {
           const type = 'AesKeyWrappingKey2019';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const keystoreId = helpers.localId({id: keyId});
           const result = await brSSM.getKeyCount({keystoreId});
@@ -35,12 +35,13 @@ describe('symmetric keys', () => {
         const type = 'AesKeyWrappingKey2019';
         const invocationTarget = {id: keyId, type, controller};
         const result = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
         should.exist(result);
 
         result.should.be.an('object');
         result.should.have.property('id', keyId);
         result.should.have.property('type', type);
+        result.should.have.property('controller', controller);
         result.should.have.property('@context');
         result['@context'].should.eql([
           'https://w3id.org/webkms/v1',
@@ -55,13 +56,13 @@ describe('symmetric keys', () => {
           const type = 'AesKeyWrappingKey2019';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           let result;
           let err;
           try {
             result = await brSSM.generateKey(
-              {keyId, operation: {invocationTarget}});
+              {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
           } catch(e) {
             err = e;
@@ -82,7 +83,7 @@ describe('symmetric keys', () => {
         let err;
         try {
           result = await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
         } catch(e) {
           err = e;
         }
@@ -102,7 +103,7 @@ describe('symmetric keys', () => {
         let err;
         try {
           result = await brSSM._helpers._symmetricKey.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
         } catch(e) {
           err = e;
         }
@@ -143,7 +144,7 @@ describe('symmetric keys', () => {
           const type = 'AesKeyWrappingKey2019';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const unwrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
           const result = await brSSM.wrapKey(
@@ -162,7 +163,7 @@ describe('symmetric keys', () => {
           const type = 'AesKeyWrappingKey2019';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const unwrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
           const result = await brSSM.wrapKey(
@@ -186,7 +187,7 @@ describe('symmetric keys', () => {
         const type = 'AesKeyWrappingKey2019';
         const invocationTarget = {id: keyId, type, controller};
         await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         let result;
         let err;
@@ -213,12 +214,13 @@ describe('symmetric keys', () => {
         const type = 'Sha256HmacKey2019';
         const invocationTarget = {id: keyId, type, controller};
         const result = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         should.exist(result);
         result.should.be.an('object');
         result.should.have.property('id', keyId);
         result.should.have.property('type', type);
+        result.should.have.property('controller', controller);
         result.should.have.property('@context');
         result['@context'].should.eql([
           'https://w3id.org/webkms/v1',
@@ -234,7 +236,8 @@ describe('symmetric keys', () => {
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
         const invocationTarget = {id: keyId, type, controller};
-        await brSSM.generateKey({keyId, operation: {invocationTarget}});
+        await brSSM.generateKey(
+          {keyId, controller, operation: {invocationTarget}});
 
         const operation = {
           verifyData: '2eb221b8-1777-417a-8f3a-05cdd030de12',
@@ -259,7 +262,8 @@ describe('symmetric keys', () => {
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
         const invocationTarget = {id: keyId, type, controller};
-        await brSSM.generateKey({keyId, operation: {invocationTarget}});
+        await brSSM.generateKey(
+          {keyId, controller, operation: {invocationTarget}});
 
         const operation = {
           verifyData: '2eb221b8-1777-417a-8f3a-05cdd030de12',
@@ -297,7 +301,8 @@ describe('symmetric keys', () => {
           const controller = 'https://example.com/i/foo';
           const type = 'Sha256HmacKey2019';
           const invocationTarget = {id: keyId, type, controller};
-          await brSSM.generateKey({keyId, operation: {invocationTarget}});
+          await brSSM.generateKey(
+            {keyId, controller, operation: {invocationTarget}});
 
           this.timeout(0);
           const promises = [];
@@ -351,7 +356,8 @@ describe('symmetric keys', () => {
           const controller = 'https://example.com/i/foo';
           const type = 'Sha256HmacKey2019';
           const invocationTarget = {id: keyId, type, controller};
-          await brSSM.generateKey({keyId, operation: {invocationTarget}});
+          await brSSM.generateKey(
+            {keyId, controller, operation: {invocationTarget}});
 
           const verifyData = '2eb221b8-1777-417a-8f3a-05cdd030de12';
           const operation = {

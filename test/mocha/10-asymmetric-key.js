@@ -27,11 +27,12 @@ describe('asymmetric keys', () => {
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};
         const result = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         should.exist(result);
         result.should.be.an('object');
-        result.should.have.keys(['@context', 'id', 'publicKeyBase58', 'type']);
+        result.should.have.keys(
+          ['@context', 'id', 'publicKeyBase58', 'type', 'controller']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
@@ -43,13 +44,13 @@ describe('asymmetric keys', () => {
           const type = 'Ed25519VerificationKey2018';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           let result;
           let err;
           try {
             result = await brSSM.generateKey(
-              {keyId, operation: {invocationTarget}});
+              {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
           } catch(e) {
             err = e;
@@ -71,7 +72,7 @@ describe('asymmetric keys', () => {
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
         const verifyData = base64url.encode(plaintextBuffer);
         const publicKey = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         const signResult = await brSSM.sign(
           {keyId, operation: {invocationTarget, verifyData}});
@@ -103,7 +104,7 @@ describe('asymmetric keys', () => {
           const type = 'Ed25519VerificationKey2018';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const unwrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
 
@@ -131,7 +132,7 @@ describe('asymmetric keys', () => {
           const type = 'Ed25519VerificationKey2018';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const wrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
 
@@ -159,7 +160,7 @@ describe('asymmetric keys', () => {
           const type = 'Ed25519VerificationKey2018';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const plaintextBuffer = Buffer.from(uuid(), 'utf8');
           const verifyData = base64url.encode(plaintextBuffer);
@@ -192,7 +193,7 @@ describe('asymmetric keys', () => {
         const type = 'Ed25519VerificationKey2018';
         const invocationTarget = {id: keyId, type, controller};
         await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         let result;
         let err;
@@ -262,11 +263,11 @@ describe('asymmetric keys', () => {
         const type = 'Ed25519VerificationKey2020';
         const invocationTarget = {id: keyId, type, controller};
         const result = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
         should.exist(result);
         result.should.be.an('object');
         result.should.have.keys([
-          '@context', 'id', 'publicKeyMultibase', 'type']);
+          '@context', 'id', 'publicKeyMultibase', 'type', 'controller']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
@@ -282,7 +283,7 @@ describe('asymmetric keys', () => {
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
         const verifyData = base64url.encode(plaintextBuffer);
         const publicKey = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         const signResult = await brSSM.sign(
           {keyId, operation: {invocationTarget, verifyData}});
@@ -315,12 +316,12 @@ describe('asymmetric keys', () => {
         const type = 'X25519KeyAgreementKey2020';
         const invocationTarget = {id: keyId, type, controller};
         const result = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         should.exist(result);
         result.should.be.an('object');
         result.should.have.keys([
-          '@context', 'id', 'publicKeyMultibase', 'type']);
+          '@context', 'id', 'publicKeyMultibase', 'type', 'controller']);
         result.id.should.equal(keyId);
         result.type.should.equal(type);
       });
@@ -332,13 +333,13 @@ describe('asymmetric keys', () => {
           const type = 'X25519KeyAgreementKey2020';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           let result;
           let err;
           try {
             result = await brSSM.generateKey(
-              {keyId, operation: {invocationTarget}});
+              {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
           } catch(e) {
             err = e;
@@ -358,7 +359,7 @@ describe('asymmetric keys', () => {
         const type = 'X25519KeyAgreementKey2020';
         const invocationTarget = {id: keyId, type, controller};
         const publicKey = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         const result = await brSSM.deriveSecret(
           {keyId, operation: {invocationTarget, publicKey}});
@@ -380,7 +381,7 @@ describe('asymmetric keys', () => {
           const type = 'X25519KeyAgreementKey2020';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const result = await brSSM.getKeyDescription({keyId});
           result.should.be.an('object');
@@ -402,7 +403,7 @@ describe('asymmetric keys', () => {
           const type = 'X25519KeyAgreementKey2020';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const unwrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
 
@@ -429,7 +430,7 @@ describe('asymmetric keys', () => {
           const type = 'X25519KeyAgreementKey2020';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const wrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
 
@@ -455,7 +456,7 @@ describe('asymmetric keys', () => {
         const type = 'X25519KeyAgreementKey2020';
         const invocationTarget = {id: keyId, type, controller};
         const result = await brSSM.generateKey(
-          {keyId, operation: {invocationTarget}});
+          {keyId, controller, operation: {invocationTarget}});
 
         should.exist(result);
         const plaintextBuffer = Buffer.from(uuid(), 'utf8');
@@ -485,7 +486,7 @@ describe('asymmetric keys', () => {
           const type = 'X25519KeyAgreementKey2020';
           const invocationTarget = {id: keyId, type, controller};
           await brSSM.generateKey(
-            {keyId, operation: {invocationTarget}});
+            {keyId, controller, operation: {invocationTarget}});
 
           const plaintextBuffer = Buffer.from(uuid(), 'utf8');
           const verifyData = base64url.encode(plaintextBuffer);
