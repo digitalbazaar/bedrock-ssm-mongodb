@@ -12,6 +12,7 @@
   that includes a `publicAlias` or `publicAliasTemplate` value for the key.
 - **BREAKING**: Require `controller` to be passed when generating a key or
   getting a key description.
+- **BREAKING**: Return `{keyId, keyDescription}` from `generateKey`.
 
 ## 6.1.0 - 2021-12-14
 

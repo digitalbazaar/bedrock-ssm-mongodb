@@ -36,14 +36,19 @@ describe('symmetric keys', () => {
         const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
-        should.exist(result);
 
+        should.exist(result);
         result.should.be.an('object');
-        result.should.have.property('id', keyId);
-        result.should.have.property('type', type);
-        result.should.have.property('controller', controller);
-        result.should.have.property('@context');
-        result['@context'].should.eql([
+        should.exist(result.keyId);
+        result.keyId.should.equal(keyId);
+        const {keyDescription} = result;
+        should.exist(keyDescription);
+        keyDescription.should.be.an('object');
+        keyDescription.should.have.property('id', keyId);
+        keyDescription.should.have.property('type', type);
+        keyDescription.should.have.property('controller', controller);
+        keyDescription.should.have.property('@context');
+        keyDescription['@context'].should.eql([
           'https://w3id.org/webkms/v1',
           'https://w3id.org/security/suites/aes-2019/v1'
         ]);
@@ -218,11 +223,16 @@ describe('symmetric keys', () => {
 
         should.exist(result);
         result.should.be.an('object');
-        result.should.have.property('id', keyId);
-        result.should.have.property('type', type);
-        result.should.have.property('controller', controller);
-        result.should.have.property('@context');
-        result['@context'].should.eql([
+        should.exist(result.keyId);
+        result.keyId.should.equal(keyId);
+        const {keyDescription} = result;
+        should.exist(keyDescription);
+        keyDescription.should.be.an('object');
+        keyDescription.should.have.property('id', keyId);
+        keyDescription.should.have.property('type', type);
+        keyDescription.should.have.property('controller', controller);
+        keyDescription.should.have.property('@context');
+        keyDescription['@context'].should.eql([
           'https://w3id.org/webkms/v1',
           'https://w3id.org/security/suites/hmac-2019/v1'
         ]);
