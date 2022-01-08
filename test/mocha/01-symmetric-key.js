@@ -16,7 +16,7 @@ describe('symmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'AesKeyWrappingKey2019';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -33,7 +33,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'AesKeyWrappingKey2019';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
         should.exist(result);
@@ -54,7 +54,7 @@ describe('symmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'AesKeyWrappingKey2019';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -77,7 +77,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'invalid';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
 
         let result;
         let err;
@@ -97,7 +97,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'invalid';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
 
         let result;
         let err;
@@ -142,7 +142,7 @@ describe('symmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'AesKeyWrappingKey2019';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -161,7 +161,7 @@ describe('symmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'AesKeyWrappingKey2019';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -185,7 +185,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'AesKeyWrappingKey2019';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -212,7 +212,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         const result = await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -235,7 +235,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -261,7 +261,7 @@ describe('symmetric keys', () => {
         const keyId = `https://example.com/kms/${await generateId()}`;
         const controller = 'https://example.com/i/foo';
         const type = 'Sha256HmacKey2019';
-        const invocationTarget = {id: keyId, type, controller};
+        const invocationTarget = {id: keyId, type};
         await brSSM.generateKey(
           {keyId, controller, operation: {invocationTarget}});
 
@@ -300,7 +300,7 @@ describe('symmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'Sha256HmacKey2019';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
@@ -355,7 +355,7 @@ describe('symmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const type = 'Sha256HmacKey2019';
-          const invocationTarget = {id: keyId, type, controller};
+          const invocationTarget = {id: keyId, type};
           await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
