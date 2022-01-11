@@ -5,8 +5,8 @@
 ### Changed
 - **BREAKING**: Override `id` in public key description if `publicAlias` is
   set on key.
-- **BREAKING**: Require `publicAlias` to be set on a key in order for it to
-  be used. During `generateKey()`, a `publicAlias` or a `publicAliasTemplate`
+- **BREAKING**: Allow a public alias to be set on a key. During
+  `generateKey()`, a `publicAlias` or a `publicAliasTemplate`
   may be passed to create a key. If not provided, then a `publicAlias` or
   `publicAliasTemplate` can later be provided via an `UpdateKeyOperation`
   that includes a `publicAlias` or `publicAliasTemplate` value for the key.
