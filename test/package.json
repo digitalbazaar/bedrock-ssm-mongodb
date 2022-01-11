@@ -16,7 +16,7 @@
     "bedrock-mongodb": "^8.0.0",
     "bedrock-package-manager": "^1.0.0",
     "bedrock-ssm-mongodb": "file:..",
-    "bedrock-test": "^5.4.0",
+    "bedrock-test": "^6.0.0",
     "bnid": "^2.0.0",
     "cross-env": "^7.0.2",
     "crypto-ld": "^6.0.0",
