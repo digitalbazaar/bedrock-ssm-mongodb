@@ -7,9 +7,10 @@
   set on key.
 - **BREAKING**: Allow a public alias to be set on a key. During
   `generateKey()`, a `publicAlias` or a `publicAliasTemplate`
-  may be passed to create a key. If not provided, then a `publicAlias` or
-  `publicAliasTemplate` can later be provided via an `UpdateKeyOperation`
-  that includes a `publicAlias` or `publicAliasTemplate` value for the key.
+  may be passed to create a key. If not provided, then a future update to
+  this module may allow a `publicAlias` or `publicAliasTemplate` to be
+  be provided via an `UpdateKeyOperation` that includes a `publicAlias` or
+  `publicAliasTemplate` value for the key.
 - **BREAKING**: Require `controller` to be passed when generating a key or
   getting a key description.
 - **BREAKING**: Return `{keyId, keyDescription}` from `generateKey`.
