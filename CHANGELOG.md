@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 7.0.0 - 2022-01-xx
+## 7.0.0 - 2022-01-11
 
 ### Changed
 - **BREAKING**: Override `id` in public key description if `publicAlias` is
