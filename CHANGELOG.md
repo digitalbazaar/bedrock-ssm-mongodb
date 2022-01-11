@@ -1,9 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 7.0.1 - 2022-01-xx
+## 7.0.1 - 2022-01-11
 
 ### Fixed
 - Fix webkms context dependency.
+- Update peer deps.
 
 ## 7.0.0 - 2022-01-11
 
