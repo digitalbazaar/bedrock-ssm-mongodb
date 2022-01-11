@@ -1,6 +1,6 @@
 {
   "name": "bedrock-ssm-mongodb",
-  "version": "7.0.1",
+  "version": "7.0.2-0",
   "description": "Bedrock SSM MongoDB",
   "license": "SEE LICENSE IN LICENSE.md",
   "main": "lib",
