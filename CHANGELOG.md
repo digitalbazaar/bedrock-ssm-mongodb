@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 7.1.0 - 2022-01-xx
+
+### Added
+- Support setting `maxCapabilityChainLength` during key generation.
+
 ## 7.0.1 - 2022-01-11
 
 ### Fixed
