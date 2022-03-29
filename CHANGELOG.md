@@ -1,5 +1,15 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 7.2.0 - 2022-03-xx
+
+### Changed
+- Update peer deps:
+  - `bedrock@4.5`
+  - `bedrock-mongodb@8.5`
+  - `bedrock-package-manager@1.2`.
+- Update internals to use esm style and use `esm.js` to
+  transpile to CommonJS.
+
 ## 7.1.0 - 2022-01-14
 
 ### Added
