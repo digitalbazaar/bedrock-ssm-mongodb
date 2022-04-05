@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 8.0.0 - 2022-04-xx
+## 8.0.0 - 2022-04-05
 
 ### Changed
 - **BREAKING**: Rename package to `@bedrock/ssm-mongodb`.
