@@ -6,24 +6,24 @@ This API is designed to be accessed using the
 API.
 
 ```js
-const brPackageManager = require('bedrock-package-manager');
+import * as brPackageManager from '@bedrock/package-manager';
 
 // require this module in the application
 // it registers itself with bedrock-package-manager
-require('bedrock-ssm-mongodb');
+import '@bedrock/ssm-mongodb';
 
 // use the API
-exports.callMethod = async ({method, options, plugin}) => {
+export async function callMethod({method, options, plugin}) {
   // the alias for bedrock-ssm-mongodb is 'ssm-v1'
   // the type for bedrock-ssm-mongodb is 'webkms-module'
   const {packageName} = brPackageManager.get(
     {alias: plugin, type: 'webkms-module'});
-  const store = require(packageName);
+  const store = await import(packageName);
 
   const result = await store[method](options);
 
   return result;
-};
+}
 ```
 
 ## API Reference

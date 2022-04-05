@@ -6,24 +6,24 @@ This API is designed to be accessed using the
 API.
 
 ```js
-const brPackageManager = require('bedrock-package-manager');
+import * as brPackageManager from '@bedrock/package-manager';
 
 // require this module in the application
 // it registers itself with bedrock-package-manager
-require('bedrock-ssm-mongodb');
+import '@bedrock/ssm-mongodb';
 
 // use the API
-exports.callMethod = async ({method, options, plugin}) => {
+export async function callMethod({method, options, plugin}) {
   // the alias for bedrock-ssm-mongodb is 'ssm-v1'
   // the type for bedrock-ssm-mongodb is 'webkms-module'
   const {packageName} = brPackageManager.get(
     {alias: plugin, type: 'webkms-module'});
-  const store = require(packageName);
+  const store = await import(packageName);
 
   const result = await store[method](options);
 
   return result;
-};
+}
 ```
 
 ## API Reference
@@ -32,12 +32,26 @@ exports.callMethod = async ({method, options, plugin}) => {
 ## bedrock-ssm-mongodb
 
 * [bedrock-ssm-mongodb](#module_bedrock-ssm-mongodb)
+    * [.getKeyCount(options)](#module_bedrock-ssm-mongodb.getKeyCount) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.generateKey(options)](#module_bedrock-ssm-mongodb.generateKey) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.wrapKey(options)](#module_bedrock-ssm-mongodb.wrapKey) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.unwrapKey(options)](#module_bedrock-ssm-mongodb.unwrapKey) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.sign(options)](#module_bedrock-ssm-mongodb.sign) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.verify(options)](#module_bedrock-ssm-mongodb.verify) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.deriveSecret(options)](#module_bedrock-ssm-mongodb.deriveSecret) ⇒ <code>Promise.&lt;object&gt;</code>
+
+<a name="module_bedrock-ssm-mongodb.getKeyCount"></a>
+
+### bedrock-ssm-mongodb.getKeyCount(options) ⇒ <code>Promise.&lt;object&gt;</code>
+Gets the number of keys in a given keystore.
+
+**Kind**: static method of [<code>bedrock-ssm-mongodb</code>](#module_bedrock-ssm-mongodb)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Key count information.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | The options to use. |
+| options.keystoreId | <code>string</code> | The ID of the keystore. |
 
 <a name="module_bedrock-ssm-mongodb.generateKey"></a>
 
@@ -51,6 +65,7 @@ Generates a new key.
 | --- | --- | --- |
 | options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
+| options.controller | <code>string</code> | The key controller. |
 | options.operation | <code>object</code> | The KMS operation. |
 
 <a name="module_bedrock-ssm-mongodb.wrapKey"></a>
@@ -66,6 +81,7 @@ Wraps a cryptographic key using a key encryption key (KEK).
 | options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
 | options.operation | <code>object</code> | The KMS operation. |
+| [options.zcapInvocation] | <code>object</code> | The zcap invocation used to   run the KMS operation; if the KMS operation was invoked via zcap. |
 
 <a name="module_bedrock-ssm-mongodb.unwrapKey"></a>
 
@@ -80,6 +96,7 @@ Unwraps a cryptographic key using a key encryption key (KEK).
 | options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
 | options.operation | <code>object</code> | The KMS operation. |
+| [options.zcapInvocation] | <code>object</code> | The zcap invocation used to   run the KMS operation; if the KMS operation was invoked via zcap. |
 
 <a name="module_bedrock-ssm-mongodb.sign"></a>
 
@@ -97,6 +114,7 @@ wisely.
 | options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
 | options.operation | <code>object</code> | The KMS operation. |
+| [options.zcapInvocation] | <code>object</code> | The zcap invocation used to   run the KMS operation; if the KMS operation was invoked via zcap. |
 
 <a name="module_bedrock-ssm-mongodb.verify"></a>
 
@@ -114,6 +132,7 @@ wisely.
 | options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
 | options.operation | <code>object</code> | The KMS operation. |
+| [options.zcapInvocation] | <code>object</code> | The zcap invocation used to   run the KMS operation; if the KMS operation was invoked via zcap. |
 
 <a name="module_bedrock-ssm-mongodb.deriveSecret"></a>
 
@@ -131,4 +150,5 @@ to produce a shared key.
 | options | <code>object</code> | The options to use. |
 | options.keyId | <code>string</code> | The key ID to use. |
 | options.operation | <code>object</code> | The KMS operation. |
+| [options.zcapInvocation] | <code>object</code> | The zcap invocation used to   run the KMS operation; if the KMS operation was invoked via zcap. |
 

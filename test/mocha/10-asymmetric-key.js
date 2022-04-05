@@ -1,11 +1,11 @@
 /*!
  * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
+import * as bedrock from '@bedrock/core';
+import * as brSSM from '@bedrock/ssm-mongodb';
+import {createRequire} from 'module';
+const require = createRequire(import.meta.url);
 const base64url = require('base64url-universal');
-const {util: {uuid}} = require('bedrock');
-const brSSM = require('bedrock-ssm-mongodb');
 const {CryptoLD} = require('crypto-ld');
 const {Ed25519VerificationKey2020} = require(
   '@digitalbazaar/ed25519-verification-key-2020');
@@ -13,10 +13,12 @@ const {Ed25519VerificationKey2018} = require(
   '@digitalbazaar/ed25519-verification-key-2018');
 const {generateId} = require('bnid');
 
-const cryptoLd = new CryptoLD();
+const {util: {uuid}} = bedrock;
 
+const cryptoLd = new CryptoLD();
 cryptoLd.use(Ed25519VerificationKey2020);
 cryptoLd.use(Ed25519VerificationKey2018);
+
 describe('asymmetric keys', () => {
   describe('Ed25519VerificationKey2018', () => {
     describe('generateKey API', () => {
