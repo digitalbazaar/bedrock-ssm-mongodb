@@ -1,12 +1,14 @@
 /*!
  * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
-const brSSM = require('bedrock-ssm-mongodb');
-const {util: {uuid}} = require('bedrock');
+import * as bedrock from '@bedrock/core';
+import * as brSSM from '@bedrock/ssm-mongodb';
+import {createRequire} from 'module';
+import * as helpers from './helpers.js';
+const require = createRequire(import.meta.url);
 const {generateId} = require('bnid');
-const helpers = require('./helpers.js');
+
+const {util: {uuid}} = bedrock;
 
 describe('symmetric keys', () => {
   describe('AesKeyWrappingKey2019', async () => {

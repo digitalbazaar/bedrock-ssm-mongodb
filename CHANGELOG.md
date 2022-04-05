@@ -1,5 +1,13 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 8.0.0 - 2022-04-xx
+
+### Changed
+- **BREAKING**: Rename package to `@bedrock/ssm-mongodb`.
+- **BREAKING**: Convert to module (ESM).
+- **BREAKING**: Remove default export.
+- **BREAKING**: Require node 14.x.
+
 ## 7.2.0 - 2022-03-29
 
 ### Changed
