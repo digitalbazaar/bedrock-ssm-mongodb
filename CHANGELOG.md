@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 8.0.1 - 2022-04-xx
+
+### Fixed
+- Fix package name registered with bedrock-package-manager.
+
 ## 8.0.0 - 2022-04-05
 
 ### Changed
