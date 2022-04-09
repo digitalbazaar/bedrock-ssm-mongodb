@@ -1,5 +1,11 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 8.0.2 - 2022-04-xx
+
+### Fixed
+- Use `require` to load lru-cache as some `esm.js` libraries
+  also load it and can cause conflicts.
+
 ## 8.0.1 - 2022-04-05
 
 ### Fixed
