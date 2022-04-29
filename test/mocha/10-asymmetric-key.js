@@ -1,9 +1,9 @@
 /*!
  * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import * as bedrock from '@bedrock/core';
 import * as brSSM from '@bedrock/ssm-mongodb';
-import {createRequire} from 'module';
+import {createRequire} from 'node:module';
+import {v4 as uuid} from 'uuid';
 const require = createRequire(import.meta.url);
 const base64url = require('base64url-universal');
 const {CryptoLD} = require('crypto-ld');
@@ -12,8 +12,6 @@ const {Ed25519VerificationKey2020} = require(
 const {Ed25519VerificationKey2018} = require(
   '@digitalbazaar/ed25519-verification-key-2018');
 const {generateId} = require('bnid');
-
-const {util: {uuid}} = bedrock;
 
 const cryptoLd = new CryptoLD();
 cryptoLd.use(Ed25519VerificationKey2020);
