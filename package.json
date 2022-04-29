@@ -37,9 +37,9 @@
     "url-template": "^2.0.8"
   },
   "peerDependencies": {
-    "@bedrock/core": "^5.0.0",
-    "@bedrock/mongodb": "^9.0.0",
-    "@bedrock/package-manager": "^2.0.0"
+    "@bedrock/core": "^6.0.0",
+    "@bedrock/mongodb": "^10.0.0",
+    "@bedrock/package-manager": "^3.0.0"
   },
   "engines": {
     "node": ">=14"

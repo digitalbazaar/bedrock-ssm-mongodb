@@ -1,5 +1,13 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 9.0.0 - 2022-04-xx
+
+### Changed
+- **BREAKING**: Update peer deps:
+  - `@bedrock/core@6`
+  - `@bedrock/mongodb@10`
+  - `@bedrock/package-manager@3`.
+
 ## 8.0.2 - 2022-04-09
 
 ### Fixed
