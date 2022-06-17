@@ -3,10 +3,8 @@
  */
 import * as brSSM from '@bedrock/ssm-mongodb';
 import * as helpers from './helpers.js';
-import {createRequire} from 'node:module';
 import {v4 as uuid} from 'uuid';
-const require = createRequire(import.meta.url);
-const {generateId} = require('bnid');
+import {generateId} from 'bnid';
 
 describe('symmetric keys', () => {
   describe('AesKeyWrappingKey2019', async () => {

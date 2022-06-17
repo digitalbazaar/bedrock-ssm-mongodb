@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 9.1.0 - 2022-xx-xx
+
+### Changed
+- Update dependencies.
+
 ## 9.0.0 - 2022-04-29
 
 ### Changed

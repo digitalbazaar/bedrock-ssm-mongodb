@@ -10,18 +10,18 @@
     "coverage-report": "c8 report"
   },
   "dependencies": {
-    "@bedrock/core": "^6.0.0",
+    "@bedrock/core": "^6.0.1",
     "@bedrock/mongodb": "^10.0.0",
     "@bedrock/package-manager": "^3.0.0",
     "@bedrock/ssm-mongodb": "file:..",
-    "@bedrock/test": "^8.0.0",
-    "@digitalbazaar/ed25519-verification-key-2018": "^3.1.0",
-    "@digitalbazaar/ed25519-verification-key-2020": "^3.1.0",
-    "base64url-universal": "^1.1.0",
-    "bnid": "^2.0.0",
-    "c8": "^7.11.0",
-    "cross-env": "^7.0.2",
-    "crypto-ld": "^6.0.0",
+    "@bedrock/test": "^8.0.5",
+    "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",
+    "@digitalbazaar/ed25519-verification-key-2020": "^4.0.0",
+    "base64url-universal": "^2.0.0",
+    "bnid": "^3.0.0",
+    "c8": "^7.11.3",
+    "cross-env": "^7.0.3",
+    "crypto-ld": "^7.0.0",
     "uuid": "^8.3.2"
   },
   "c8": {
