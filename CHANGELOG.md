@@ -4,6 +4,7 @@
 
 ### Changed
 - Update dependencies.
+- Lint module.
 
 ## 9.0.0 - 2022-04-29
 
