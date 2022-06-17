@@ -5,6 +5,7 @@
 ### Changed
 - Update dependencies.
 - Lint module.
+- Use `package.json` `files` field.
 
 ## 9.0.0 - 2022-04-29
 
