@@ -5,6 +5,9 @@
   "description": "Bedrock SSM MongoDB",
   "license": "SEE LICENSE IN LICENSE.md",
   "main": "./lib/index.js",
+  "files": [
+    "lib/**/*.js"
+  ],
   "scripts": {
     "generate-readme": "jsdoc2md -t readme-template.hbs lib/*.js > README.md",
     "lint": "eslint ."
