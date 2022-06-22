@@ -1,8 +1,9 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 9.1.0 - 2022-xx-xx
+## 10.0.0 - 2022-xx-xx
 
 ### Changed
+- **BREAKING**: Require Node.js >=16.
 - Update dependencies.
 - Lint module.
 - Use `package.json` `files` field.
