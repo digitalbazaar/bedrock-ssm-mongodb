@@ -1,17 +1,17 @@
 /*!
  * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import * as brSSM from '@bedrock/ssm-mongodb';
-import {v4 as uuid} from 'uuid';
 import * as base64url from 'base64url-universal';
+import * as brSSM from '@bedrock/ssm-mongodb';
 import {CryptoLD} from 'crypto-ld';
-import {
-  Ed25519VerificationKey2020
-} from '@digitalbazaar/ed25519-verification-key-2020';
 import {
   Ed25519VerificationKey2018
 } from '@digitalbazaar/ed25519-verification-key-2018';
+import {
+  Ed25519VerificationKey2020
+} from '@digitalbazaar/ed25519-verification-key-2020';
 import {generateId} from 'bnid';
+import {v4 as uuid} from 'uuid';
 
 const cryptoLd = new CryptoLD();
 cryptoLd.use(Ed25519VerificationKey2020);
