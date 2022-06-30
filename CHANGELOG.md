@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 10.0.0 - 2022-xx-xx
+## 10.0.0 - 2022-06-30
 
 ### Changed
 - **BREAKING**: Require Node.js >=16.
