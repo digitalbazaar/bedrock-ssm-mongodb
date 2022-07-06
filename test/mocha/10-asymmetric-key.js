@@ -348,8 +348,8 @@ describe('asymmetric keys', () => {
   }); // end Ed25519VerificationKey2018
 
   const signTests = [
-    //{type: 'Ed25519VerificationKey2020'},
-    //{type: 'urn:webkms:multikey:Ed25519'},
+    {type: 'Ed25519VerificationKey2020'},
+    {type: 'urn:webkms:multikey:Ed25519'},
     {type: 'urn:webkms:multikey:P-256'}
   ];
   for(const {type} of signTests) {
