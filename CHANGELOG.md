@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 10.1.0 - 2022-07-xx
+
+### Added
+- Add support for ECDSA keys: P-256, P-384, P-521.
+
 ## 10.0.0 - 2022-06-30
 
 ### Changed
