@@ -3,9 +3,7 @@
  */
 import * as base64url from 'base64url-universal';
 import * as brSSM from '@bedrock/ssm-mongodb';
-import * as crypto from 'node:crypto';
 import * as ecdsa from '../../lib/ecdsa/index.js';
-import {createRequire} from 'node:module';
 import {CryptoLD} from 'crypto-ld';
 import {
   Ed25519VerificationKey2018
