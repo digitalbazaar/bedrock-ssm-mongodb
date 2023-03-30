@@ -1,5 +1,13 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 10.1.1 - 2023-TBD
+
+### Changed
+- Remove `lib/ecdsa` and use `@digitalbazaar/ecdsa-multikey@v1.1.1`.
+
+### Fixed
+- Fix multikey context url to `https://w3id.org/security/multikey/v1`.
+
 ## 10.1.0 - 2022-07-10
 
 ### Added
