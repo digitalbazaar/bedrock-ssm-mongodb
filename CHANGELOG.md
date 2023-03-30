@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 10.1.1 - 2023-TBD
+## 10.1.1 - 2023-03-30
 
 ### Changed
 - Remove `lib/ecdsa` and use `@digitalbazaar/ecdsa-multikey@v1.1.1`.
