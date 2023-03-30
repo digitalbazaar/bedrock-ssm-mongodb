@@ -15,6 +15,7 @@
     "@bedrock/package-manager": "^3.0.0",
     "@bedrock/ssm-mongodb": "file:..",
     "@bedrock/test": "^8.0.5",
+    "@digitalbazaar/ecdsa-multikey": "^1.1.1",
     "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^4.0.0",
     "base64url-universal": "^2.0.0",
