@@ -3,7 +3,8 @@
 ## 10.1.2 - 2023-TBD
 
 ### Fixed
-- Fix key description type to be `Multikey`.
+- Fix key description type to `Multikey` for key types that start with
+  `urn:webkms:multikey:` in `getKeyDescription()`.
 - Fix overwriting key type in `sign()`.
 
 ## 10.1.1 - 2023-03-30
