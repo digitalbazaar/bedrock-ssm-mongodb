@@ -1,5 +1,11 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 10.1.2 - 2023-TBD
+
+### Fixed
+- Fix key description type to be `Multikey`.
+- Fix overwriting key type in `sign()`.
+
 ## 10.1.1 - 2023-03-30
 
 ### Changed
