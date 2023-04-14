@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 10.1.2 - 2023-TBD
+## 10.1.2 - 2023-04-14
 
 ### Fixed
 - Fix key description type to `Multikey` for key types that start with
