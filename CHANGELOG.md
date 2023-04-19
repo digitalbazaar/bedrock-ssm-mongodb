@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 10.2.0 - 2023-04-xx
+
+### Changed
+- DRY-up code having to do with keys and key operations.
+
 ## 10.1.2 - 2023-04-14
 
 ### Fixed
