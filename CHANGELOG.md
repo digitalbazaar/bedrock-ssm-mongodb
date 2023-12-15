@@ -1,5 +1,11 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 11.0.0 - TBD
+
+### Changed
+- **BREAKING**: Update peer deps:
+  - Use `@bedrock/mongodb@11`. This version uses MongoDB native driver v6.
+
 ## 10.1.3 - 2023-04-20
 
 ### Fixed

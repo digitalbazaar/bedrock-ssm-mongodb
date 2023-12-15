@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@bedrock/core": "^6.0.1",
-    "@bedrock/mongodb": "^10.0.0",
+    "@bedrock/mongodb": "digitalbazaar/bedrock-mongodb#driver-v6",
     "@bedrock/package-manager": "^3.0.0",
     "@bedrock/ssm-mongodb": "file:..",
     "@bedrock/test": "^8.0.5",
