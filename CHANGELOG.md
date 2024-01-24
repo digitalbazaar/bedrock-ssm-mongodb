@@ -8,6 +8,7 @@
   are integrated with this module (or clients that make use of it
   indirectly), but it is considered a breaking change to help prevent
   unforeseen incompatibilities.
+- Indicate compatibility is with node 18+.
 
 ## 10.1.3 - 2023-04-20
 
