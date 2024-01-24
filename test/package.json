@@ -15,15 +15,15 @@
     "@bedrock/package-manager": "^3.0.0",
     "@bedrock/ssm-mongodb": "file:..",
     "@bedrock/test": "^8.0.5",
-    "@digitalbazaar/ecdsa-multikey": "^1.1.1",
+    "@digitalbazaar/ecdsa-multikey": "^1.6.0",
     "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^4.0.0",
     "base64url-universal": "^2.0.0",
     "bnid": "^3.0.0",
-    "c8": "^7.11.3",
+    "c8": "^9.1.0",
     "cross-env": "^7.0.3",
     "crypto-ld": "^7.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.1"
   },
   "c8": {
     "excludeNodeModules": false,
