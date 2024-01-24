@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2024 Digital Bazaar, Inc. All rights reserved.
  */
 import * as brSSM from '@bedrock/ssm-mongodb';
 import * as helpers from './helpers.js';
@@ -46,10 +46,8 @@ describe('symmetric keys', () => {
         keyDescription.should.have.property('type', type);
         keyDescription.should.have.property('controller', controller);
         keyDescription.should.have.property('@context');
-        keyDescription['@context'].should.eql([
-          'https://w3id.org/webkms/v1',
-          'https://w3id.org/security/suites/aes-2019/v1'
-        ]);
+        keyDescription['@context'].should.eql(
+          'https://w3id.org/security/suites/aes-2019/v1');
       });
       it('throws a DuplicateError when generating the same key twice',
         async () => {
@@ -230,10 +228,8 @@ describe('symmetric keys', () => {
         keyDescription.should.have.property('type', type);
         keyDescription.should.have.property('controller', controller);
         keyDescription.should.have.property('@context');
-        keyDescription['@context'].should.eql([
-          'https://w3id.org/webkms/v1',
-          'https://w3id.org/security/suites/hmac-2019/v1'
-        ]);
+        keyDescription['@context'].should.eql(
+          'https://w3id.org/security/suites/hmac-2019/v1');
       });
     }); // end generateKey API
 
