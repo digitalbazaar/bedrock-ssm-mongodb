@@ -1,10 +1,9 @@
 /*!
- * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2024 Digital Bazaar, Inc. All rights reserved.
  */
 import * as base64url from 'base64url-universal';
 import * as brSSM from '@bedrock/ssm-mongodb';
 import * as ecdsa from '@digitalbazaar/ecdsa-multikey';
-import {CryptoLD} from 'crypto-ld';
 import {
   Ed25519VerificationKey2018
 } from '@digitalbazaar/ed25519-verification-key-2018';
@@ -13,10 +12,6 @@ import {
 } from '@digitalbazaar/ed25519-verification-key-2020';
 import {generateId} from 'bnid';
 import {v4 as uuid} from 'uuid';
-
-const cryptoLd = new CryptoLD();
-cryptoLd.use(Ed25519VerificationKey2020);
-cryptoLd.use(Ed25519VerificationKey2018);
 
 describe('asymmetric keys', () => {
   describe('Ed25519VerificationKey2018', () => {
@@ -136,7 +131,7 @@ describe('asymmetric keys', () => {
         const {signatureValue} = signResult;
         signatureValue.should.be.a('string');
 
-        const keyPair = await cryptoLd.from(publicKey);
+        const keyPair = await Ed25519VerificationKey2018.from(publicKey);
         const {verify} = keyPair.verifier();
         const valid = await verify({
           data: plaintextBuffer,
@@ -403,10 +398,9 @@ describe('asymmetric keys', () => {
           const {signatureValue} = signResult;
           signatureValue.should.be.a('string');
 
-          // FIXME: use new multikey libs, not `cryptoLd`
           let verifier;
           if(type === 'urn:webkms:multikey:Ed25519') {
-            const keyPair = await cryptoLd.from({
+            const keyPair = await Ed25519VerificationKey2020.from({
               ...publicKey,
               '@context': 'https://w3id.org/security/suites/ed25519-2020/v1',
               type: 'Ed25519VerificationKey2020'
@@ -416,8 +410,11 @@ describe('asymmetric keys', () => {
             // assumes ECDSA
             const keyPair = await ecdsa.from(publicKey);
             verifier = keyPair.verifier();
-          } else {
-            const keyPair = await cryptoLd.from(publicKey);
+          } else if(type === 'Ed25519VerificationKey2020') {
+            const keyPair = await Ed25519VerificationKey2020.from(publicKey);
+            verifier = keyPair.verifier();
+          } else if(type === 'Ed25519VerificationKey2018') {
+            const keyPair = await Ed25519VerificationKey2018.from(publicKey);
             verifier = keyPair.verifier();
           }
           const {verify} = verifier;
