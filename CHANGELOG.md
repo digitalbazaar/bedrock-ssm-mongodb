@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 11.0.0 - 2024-mm-dd
+## 11.0.0 - 2024-01-25
 
 ### Changed
 - **BREAKING**: Do not use webkms-context in symmetric key descriptions
