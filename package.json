@@ -27,6 +27,7 @@
   "homepage": "https://github.com/digitalbazaar/bedrock-ssm-mongodb",
   "dependencies": {
     "@digitalbazaar/ecdsa-multikey": "^1.1.1",
+    "@digitalbazaar/ed25519-multikey": "^1.0.2",
     "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^4.0.0",
     "@digitalbazaar/x25519-key-agreement-key-2020": "^3.0.0",
