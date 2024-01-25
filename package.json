@@ -34,7 +34,6 @@
     "assert-plus": "^1.0.0",
     "base58-universal": "^2.0.0",
     "base64url-universal": "^2.0.0",
-    "crypto-ld": "^7.0.0",
     "lru-cache": "^6.0.0",
     "sha256-hmac-key-2019-context": "^1.0.3",
     "url-template": "^3.0.0"
