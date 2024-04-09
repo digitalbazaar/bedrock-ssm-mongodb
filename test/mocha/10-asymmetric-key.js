@@ -2,7 +2,9 @@
  * Copyright (c) 2019-2024 Digital Bazaar, Inc. All rights reserved.
  */
 import * as base64url from 'base64url-universal';
+import * as bls12381Multikey from '@digitalbazaar/bls12-381-multikey';
 import * as brSSM from '@bedrock/ssm-mongodb';
+import * as cborg from 'cborg';
 import * as ecdsa from '@digitalbazaar/ecdsa-multikey';
 import {
   Ed25519VerificationKey2018
@@ -345,7 +347,9 @@ describe('asymmetric keys', () => {
     {type: 'urn:webkms:multikey:Ed25519'},
     {type: 'urn:webkms:multikey:P-256'},
     {type: 'urn:webkms:multikey:P-384'},
-    {type: 'urn:webkms:multikey:P-521'}
+    {type: 'urn:webkms:multikey:P-521'},
+    {type: 'urn:webkms:multikey:BBS-BLS12-381-SHA-256'},
+    {type: 'urn:webkms:multikey:BBS-BLS12-381-SHAKE-256'}
   ];
   for(const {type} of signTests) {
     let expectedType;
@@ -384,11 +388,18 @@ describe('asymmetric keys', () => {
           const keyId = `https://example.com/kms/${await generateId()}`;
           const controller = 'https://example.com/i/foo';
           const invocationTarget = {id: keyId, type};
-          const plaintextBuffer = Buffer.from(uuid(), 'utf8');
-          const verifyData = base64url.encode(plaintextBuffer);
           const {keyDescription: publicKey} = await brSSM.generateKey(
             {keyId, controller, operation: {invocationTarget}});
 
+          const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+          let verifyData;
+          if(type.startsWith('urn:webkms:multikey:BBS-')) {
+            const header = new Uint8Array();
+            const messages = [plaintextBuffer];
+            verifyData = base64url.encode(cborg.encode([header, messages]));
+          } else {
+            verifyData = base64url.encode(plaintextBuffer);
+          }
           const signResult = await brSSM.sign(
             {keyId, operation: {invocationTarget, verifyData}});
 
@@ -406,8 +417,7 @@ describe('asymmetric keys', () => {
               type: 'Ed25519VerificationKey2020'
             });
             verifier = keyPair.verifier();
-          } else if(type.startsWith('urn:webkms:multikey:')) {
-            // assumes ECDSA
+          } else if(type.startsWith('urn:webkms:multikey:P-')) {
             const keyPair = await ecdsa.from(publicKey);
             verifier = keyPair.verifier();
           } else if(type === 'Ed25519VerificationKey2020') {
@@ -416,15 +426,35 @@ describe('asymmetric keys', () => {
           } else if(type === 'Ed25519VerificationKey2018') {
             const keyPair = await Ed25519VerificationKey2018.from(publicKey);
             verifier = keyPair.verifier();
+          } else if(type.startsWith('urn:webkms:multikey:BBS-')) {
+            const keyPair = await bls12381Multikey.from(publicKey);
+            verifier = keyPair.verifier();
+
+            // do multiverify
+            const presentationHeader = new Uint8Array();
+            const header = new Uint8Array();
+            const messages = [plaintextBuffer];
+            const proof = await keyPair.deriveProof({
+              signature: base64url.decode(signatureValue),
+              header, messages, presentationHeader,
+              disclosedMessageIndexes: [0]
+            });
+            const verified = await verifier.multiverify({
+              proof, header, presentationHeader, messages
+            });
+            verified.should.be.a('boolean');
+            verified.should.be.true;
+            return;
           }
+
           const {verify} = verifier;
-          const valid = await verify({
+          const verified = await verify({
             data: plaintextBuffer,
             signature: base64url.decode(signatureValue)
           });
 
-          valid.should.be.a('boolean');
-          valid.should.be.true;
+          verified.should.be.a('boolean');
+          verified.should.be.true;
         });
       }); // end sign API
     }); // end type-specific sign test
