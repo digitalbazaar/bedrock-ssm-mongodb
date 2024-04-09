@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 11.1.0 - 2024-04-dd
+
+### Added
+- Add support for BBS keys.
+
 ## 11.0.0 - 2024-01-25
 
 ### Changed
