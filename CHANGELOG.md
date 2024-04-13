@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 11.2.0 - 2024-04-dd
+
+### Added
+- Accept `urn:webkms:multikey:Bls12381G2`.
+
 ## 11.1.0 - 2024-04-11
 
 ### Added

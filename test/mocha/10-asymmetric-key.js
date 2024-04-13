@@ -349,7 +349,8 @@ describe('asymmetric keys', () => {
     {type: 'urn:webkms:multikey:P-384'},
     {type: 'urn:webkms:multikey:P-521'},
     {type: 'urn:webkms:multikey:BBS-BLS12-381-SHA-256'},
-    {type: 'urn:webkms:multikey:BBS-BLS12-381-SHAKE-256'}
+    {type: 'urn:webkms:multikey:BBS-BLS12-381-SHAKE-256'},
+    {type: 'urn:webkms:multikey:Bls12381G2'}
   ];
   for(const {type} of signTests) {
     let expectedType;
@@ -393,7 +394,8 @@ describe('asymmetric keys', () => {
 
           const plaintextBuffer = Buffer.from(uuid(), 'utf8');
           let verifyData;
-          if(type.startsWith('urn:webkms:multikey:BBS-')) {
+          if(type.startsWith('urn:webkms:multikey:BBS-') ||
+            type === 'urn:webkms:multikey:Bls12381G2') {
             const header = new Uint8Array();
             const messages = [plaintextBuffer];
             verifyData = base64url.encode(cborg.encode([header, messages]));
@@ -426,7 +428,8 @@ describe('asymmetric keys', () => {
           } else if(type === 'Ed25519VerificationKey2018') {
             const keyPair = await Ed25519VerificationKey2018.from(publicKey);
             verifier = keyPair.verifier();
-          } else if(type.startsWith('urn:webkms:multikey:BBS-')) {
+          } else if(type.startsWith('urn:webkms:multikey:BBS-') ||
+            type === 'urn:webkms:multikey:Bls12381G2') {
             const keyPair = await bls12381Multikey.from(publicKey);
             verifier = keyPair.verifier();
 
