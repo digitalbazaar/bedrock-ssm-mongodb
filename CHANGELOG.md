@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 11.2.1 - 2024-04-dd
+
+### Fixed
+- Remove unnecessary dependencies.
+
 ## 11.2.0 - 2024-04-13
 
 ### Added
