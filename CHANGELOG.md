@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 12.0.0 - 2024-08-dd
+## 12.0.0 - 2024-08-19
 
 ### Changed
 - **BREAKING**: Use `@digitalbazaar/bls12-381-multikey` to get
