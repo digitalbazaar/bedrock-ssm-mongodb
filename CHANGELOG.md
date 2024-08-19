@@ -1,5 +1,12 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 12.0.0 - 2024-08-dd
+
+### Changed
+- **BREAKING**: Use `@digitalbazaar/bls12-381-multikey` to get
+  interoperability with the latest IETF BBS draft 6. Previous BBS signatures
+  are no longer compatible and should be considered obsolete.
+
 ## 11.2.1 - 2024-04-21
 
 ### Fixed
