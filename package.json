@@ -35,6 +35,7 @@
     "assert-plus": "^1.0.0",
     "base58-universal": "^2.0.0",
     "base64url-universal": "^2.0.0",
+    "jose": "^5.9.6",
     "lru-cache": "^6.0.0",
     "url-template": "^3.0.0"
   },
