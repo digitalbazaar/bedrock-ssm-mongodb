@@ -1,10 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 12.1.0 - 2025-mm-dd
+## 12.1.0 - 2025-02-04
 
 ### Added
 - Add feature to enable encryption of key secrets within key records. This
-  feature uses an external key ecryption key that is provided via the
+  feature uses an external key encryption key that is provided via the
   `bedrock.config['ssm-mongodb'].keyRecordEncryption.kek` value in the
   bedrock config system. This key encryption key needs an `id` and
   a `secretKeyMultibase` value that expresses an AES-256 key wrapping key
