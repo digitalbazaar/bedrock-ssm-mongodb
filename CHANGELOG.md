@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 12.1.1 - 2025-mm-dd
+
+### Fixed
+- Remove unused `background` option from mongodb index creation.
+
 ## 12.1.0 - 2025-02-04
 
 ### Added
