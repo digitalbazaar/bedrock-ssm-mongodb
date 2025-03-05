@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 12.1.2 - 2025-mm-dd
+
+### Fixed
+- Do not pass `writeOptions` in database calls.
+
 ## 12.1.1 - 2025-03-04
 
 ### Fixed
