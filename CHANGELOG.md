@@ -1,5 +1,23 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 13.0.0 - 2025-03-xx
+
+### Changed
+- Update dependencies.
+  - `@digitalbazaar/bls12-381-multikey@2.1.0`.
+  - `@digitalbazaar/ecdsa-multikey@1.8.0`.
+  - `@digitalbazaar/ed25519-multikey@1.3.1`.
+  - `@digitalbazaar/ed25519-verification-key-2020@4.2.0`.
+  - `@digitalbazaar/x25519-key-agreement-key-2020@3.0.1`.
+  - `url-template@3.1.1`.
+- Update peer dependencies.
+  - `@bedrock/core@6.3.0`.
+  - **BREAKING**: `@bedrock/mongodb@11`.
+    - Use MongoDB driver 6.x and update error names and details.
+    - See changelog for details.
+- Update dev dependencies.
+- Update test dependencies.
+
 ## 12.1.2 - 2025-03-04
 
 ### Fixed
