@@ -1,5 +1,10 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 13.1.0 - 2025-05-dd
+
+### Changed
+- Use `lru-cache@11`.
+
 ## 13.0.0 - 2025-03-07
 
 ### Changed
