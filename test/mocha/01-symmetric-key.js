@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2019-2025 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2026 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
 import * as brSSM from '@bedrock/ssm-mongodb';
@@ -9,7 +9,7 @@ import {generateId} from 'bnid';
 import {v4 as uuid} from 'uuid';
 
 // import is for testing purposes only; not a public export
-import {_loadKeks} from '@bedrock/ssm-mongodb/lib/aeskw.js';
+import {_loadKeks} from '@bedrock/ssm-mongodb/lib/keySecrets.js';
 
 /* eslint-disable */
 /*
