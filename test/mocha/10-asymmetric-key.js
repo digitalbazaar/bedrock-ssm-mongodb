@@ -39,11 +39,11 @@ const keyRecordEncryption = [
 ];
 for(const encryptConfig of keyRecordEncryption) {
   describe(`asymmetric keys ${encryptConfig.title}`, () => {
-    before(() => {
+    before(async () => {
       bedrock.config['ssm-mongodb'].keyRecordEncryption = {
         kek: encryptConfig.kek
       };
-      _loadKeks();
+      await _loadKeks();
     });
     after(() => {
       bedrock.config['ssm-mongodb'].keyRecordEncryption = {kek: null};
