@@ -9,7 +9,7 @@ import {generateId} from 'bnid';
 import {v4 as uuid} from 'uuid';
 
 // import is for testing purposes only; not a public export
-import {_loadKeks} from '@bedrock/ssm-mongodb/lib/storage/keySecrets.js';
+import {_createKeyRecordCipher} from '@bedrock/ssm-mongodb';
 
 /* eslint-disable */
 /*
@@ -35,7 +35,7 @@ for(const encryptConfig of keyRecordEncryption) {
       bedrock.config['ssm-mongodb'].keyRecordEncryption = {
         kek: encryptConfig.kek
       };
-      await _loadKeks();
+      await _createKeyRecordCipher();
     });
     after(() => {
       bedrock.config['ssm-mongodb'].keyRecordEncryption = {kek: null};
