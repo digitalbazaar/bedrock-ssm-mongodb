@@ -9,7 +9,7 @@ import {generateId} from 'bnid';
 import {v4 as uuid} from 'uuid';
 
 // import is for testing purposes only; not a public export
-import {_loadKeks} from '@bedrock/ssm-mongodb/lib/keySecrets.js';
+import {_loadKeks} from '@bedrock/ssm-mongodb/lib/storage/keySecrets.js';
 
 /* eslint-disable */
 /*
