@@ -3,16 +3,11 @@
  */
 import * as base64url from 'base64url-universal';
 import * as bedrock from '@bedrock/core';
-import * as bls12381Multikey from '@digitalbazaar/bls12-381-multikey';
+import * as Bls12381Multikey from '@digitalbazaar/bls12-381-multikey';
 import * as brSSM from '@bedrock/ssm-mongodb';
 import * as cborg from 'cborg';
-import * as ecdsa from '@digitalbazaar/ecdsa-multikey';
-import {
-  Ed25519VerificationKey2018
-} from '@digitalbazaar/ed25519-verification-key-2018';
-import {
-  Ed25519VerificationKey2020
-} from '@digitalbazaar/ed25519-verification-key-2020';
+import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
+import * as Ed25519Multikey from '@digitalbazaar/ed25519-multikey';
 import {generateId} from 'bnid';
 import {v4 as uuid} from 'uuid';
 
@@ -181,26 +176,15 @@ for(const encryptConfig of keyRecordEncryption) {
             signatureValue.should.be.a('string');
 
             let verifier;
-            if(type === 'urn:webkms:multikey:Ed25519') {
-              // FIXME: use eddsa-multikey
-              const keyPair = await Ed25519VerificationKey2020.from({
-                ...publicKey,
-                '@context': 'https://w3id.org/security/suites/ed25519-2020/v1',
-                type: 'Ed25519VerificationKey2020'
-              });
+            if(type.includes('Ed25519')) {
+              const keyPair = await Ed25519Multikey.from(publicKey);
               verifier = keyPair.verifier();
             } else if(type.startsWith('urn:webkms:multikey:P-')) {
-              const keyPair = await ecdsa.from(publicKey);
-              verifier = keyPair.verifier();
-            } else if(type === 'Ed25519VerificationKey2020') {
-              const keyPair = await Ed25519VerificationKey2020.from(publicKey);
-              verifier = keyPair.verifier();
-            } else if(type === 'Ed25519VerificationKey2018') {
-              const keyPair = await Ed25519VerificationKey2018.from(publicKey);
+              const keyPair = await EcdsaMultikey.from(publicKey);
               verifier = keyPair.verifier();
             } else if(type.startsWith('urn:webkms:multikey:BBS-') ||
               type === 'urn:webkms:multikey:Bls12381G2') {
-              const keyPair = await bls12381Multikey.from(publicKey);
+              const keyPair = await Bls12381Multikey.from(publicKey);
               verifier = keyPair.verifier();
 
               // do multiverify
