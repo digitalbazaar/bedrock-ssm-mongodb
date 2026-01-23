@@ -3,11 +3,7 @@
  */
 import * as base64url from 'base64url-universal';
 import * as bedrock from '@bedrock/core';
-import * as Bls12381Multikey from '@digitalbazaar/bls12-381-multikey';
 import * as brSSM from '@bedrock/ssm-mongodb';
-import * as cborg from 'cborg';
-import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
-import * as Ed25519Multikey from '@digitalbazaar/ed25519-multikey';
 import {generateId} from 'bnid';
 import {v4 as uuid} from 'uuid';
 
@@ -34,27 +30,18 @@ const keyRecordEncryption = [
 ];
 const supportedKeys = [
   {
-    type: 'Ed25519VerificationKey2018',
-    expectedContext: 'https://w3id.org/security/suites/ed25519-2018/v1',
-    expectedPublicKeyType: 'Ed25519VerificationKey2018',
-    expectedPublicKeyProperty: 'publicKeyBase58'
+    type: 'X25519KeyAgreementKey2020',
+    expectedContext: 'https://w3id.org/security/suites/x25519-2020/v1',
+    expectedPublicKeyType: 'X25519KeyAgreementKey2020'
   },
-  {
-    type: 'Ed25519VerificationKey2020',
-    expectedContext: 'https://w3id.org/security/suites/ed25519-2020/v1',
-    expectedPublicKeyType: 'Ed25519VerificationKey2020'
-  },
-  {type: 'urn:webkms:multikey:Ed25519'},
-  {type: 'urn:webkms:multikey:P-256'},
-  {type: 'urn:webkms:multikey:P-384'},
-  {type: 'urn:webkms:multikey:P-521'},
-  {type: 'urn:webkms:multikey:BBS-BLS12-381-SHA-256'},
-  {type: 'urn:webkms:multikey:BBS-BLS12-381-SHAKE-256'},
-  {type: 'urn:webkms:multikey:Bls12381G2'}
+  //{type: 'urn:webkms:multikey:X25519'},
+  // {type: 'urn:webkms:multikey:P-256'},
+  // {type: 'urn:webkms:multikey:P-384'},
+  // {type: 'urn:webkms:multikey:P-521'}
 ];
 
 for(const encryptConfig of keyRecordEncryption) {
-  describe(`asymmetric keys ${encryptConfig.title}`, () => {
+  describe(`key agreement keys ${encryptConfig.title}`, () => {
     const moduleConfig = bedrock.config['ssm-mongodb'];
     const oldConfigValue = moduleConfig.keyRecordEncryption;
     before(async () => {
@@ -148,70 +135,47 @@ for(const encryptConfig of keyRecordEncryption) {
           });
         });
 
-        describe('sign API', () => {
-          it('produces a verifiable signature', async () => {
+        describe('deriveSecret API', () => {
+          it('derives a shared secret', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
             const {keyDescription: publicKey} = await brSSM.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
-            const plaintextBuffer = Buffer.from(uuid(), 'utf8');
-            let verifyData;
-            if(type.startsWith('urn:webkms:multikey:BBS-') ||
-              type === 'urn:webkms:multikey:Bls12381G2') {
-              const header = new Uint8Array();
-              const messages = [plaintextBuffer];
-              verifyData = base64url.encode(cborg.encode([header, messages]));
-            } else {
-              verifyData = base64url.encode(plaintextBuffer);
-            }
-            const signResult = await brSSM.sign(
-              {keyId, operation: {invocationTarget, verifyData}});
+            const result = await brSSM.deriveSecret(
+              {keyId, operation: {invocationTarget, publicKey}});
 
-            should.exist(signResult);
-            signResult.should.be.an('object');
-            signResult.should.have.keys(['signatureValue']);
-            const {signatureValue} = signResult;
-            signatureValue.should.be.a('string');
+            should.exist(result);
+            result.should.be.an('object');
+            result.should.have.keys(['secret']);
+            const {secret} = result;
+            secret.should.be.a('string');
+          });
 
-            let verifier;
-            if(type.includes('Ed25519')) {
-              const keyPair = await Ed25519Multikey.from(publicKey);
-              verifier = keyPair.verifier();
-            } else if(type.startsWith('urn:webkms:multikey:P-')) {
-              const keyPair = await EcdsaMultikey.from(publicKey);
-              verifier = keyPair.verifier();
-            } else if(type.startsWith('urn:webkms:multikey:BBS-') ||
-              type === 'urn:webkms:multikey:Bls12381G2') {
-              const keyPair = await Bls12381Multikey.from(publicKey);
-              verifier = keyPair.verifier();
-
-              // do multiverify
-              const presentationHeader = new Uint8Array();
-              const header = new Uint8Array();
-              const messages = [plaintextBuffer];
-              const proof = await keyPair.deriveProof({
-                signature: base64url.decode(signatureValue),
-                header, messages, presentationHeader,
-                disclosedMessageIndexes: [0]
-              });
-              const verified = await verifier.multiverify({
-                proof, header, presentationHeader, messages
-              });
-              verified.should.be.a('boolean');
-              verified.should.be.true;
-              return;
-            }
-
-            const {verify} = verifier;
-            const verified = await verify({
-              data: plaintextBuffer,
-              signature: base64url.decode(signatureValue)
+          it('fails when public types do not match', async () => {
+            const keyId = `https://example.com/kms/${await generateId()}`;
+            const controller = 'https://example.com/i/foo';
+            const invocationTarget = {id: keyId, type};
+            await brSSM.generateKey({
+              keyId, controller, operation: {invocationTarget}
             });
 
-            verified.should.be.a('boolean');
-            verified.should.be.true;
+            const publicKey = {type: 'NonMatchingType'};
+
+            let result;
+            let err;
+            try {
+              result = await brSSM.deriveSecret({
+                keyId, operation: {publicKey}
+              });
+            } catch(e) {
+              err = e;
+            }
+
+            should.exist(err);
+            should.not.exist(result);
+            err.name.should.equal('Error');
           });
 
           it('fails when "maxCapabilityChainLength" is exceeded', async () => {
@@ -251,8 +215,31 @@ for(const encryptConfig of keyRecordEncryption) {
             err.message.should.equal(
               'Maximum zcap invocation capability chain length (1) exceeded.');
           });
+        });
 
-          it('throws when trying to derive a secret', async () => {
+        describe('getKeyDescription API', () => {
+          it('returns a key description', async () => {
+            const keyId = `https://example.com/kms/${await generateId()}`;
+            const controller = 'https://example.com/i/foo';
+            const invocationTarget = {id: keyId, type};
+            await brSSM.generateKey(
+              {keyId, controller, operation: {invocationTarget}});
+
+            const result = await brSSM.getKeyDescription({keyId, controller});
+            result.should.be.an('object');
+            result.should.have.keys([
+              '@context', 'id', expectedPublicKeyProperty,
+              'type', 'controller'
+            ]);
+            result['@context'].should.equal(expectedContext);
+            result.id.should.equal(keyId);
+            result.controller.should.equal(controller);
+            result.type.should.equal(expectedPublicKeyType);
+          });
+        });
+
+        describe('non-key agreement key APIs', () => {
+          it('throws when trying to sign', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
@@ -263,9 +250,8 @@ for(const encryptConfig of keyRecordEncryption) {
             let signResult;
             let err;
             try {
-              signResult = await brSSM.deriveSecret({
-                keyId, operation: {publicKey: {type}}
-              });
+              const verifyData = base64url.encode(Buffer.from(uuid(), 'utf8'));
+              signResult = await brSSM.sign({keyId, operation: {verifyData}});
             } catch(e) {
               err = e;
             }
@@ -299,26 +285,27 @@ for(const encryptConfig of keyRecordEncryption) {
             should.not.exist(signResult);
             err.name.should.equal('Error');
           });
-        });
 
-        describe('getKeyDescription API', () => {
-          it('returns a key description', async () => {
+          it('throws when trying to unwrap a key', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
             await brSSM.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
-            const result = await brSSM.getKeyDescription({keyId, controller});
-            result.should.be.an('object');
-            result.should.have.keys([
-              '@context', 'id', expectedPublicKeyProperty,
-              'type', 'controller'
-            ]);
-            result['@context'].should.equal(expectedContext);
-            result.id.should.equal(keyId);
-            result.controller.should.equal(controller);
-            result.type.should.equal(expectedPublicKeyType);
+            const wrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
+
+            let result;
+            let err;
+            try {
+              result = await brSSM.unwrapKey({keyId, operation: {wrappedKey}});
+            } catch(e) {
+              err = e;
+            }
+
+            should.exist(err);
+            should.not.exist(result);
+            err.name.should.equal('Error');
           });
         });
       });

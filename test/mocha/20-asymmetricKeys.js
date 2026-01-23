@@ -253,6 +253,27 @@ for(const encryptConfig of keyRecordEncryption) {
           });
         });
 
+        describe('getKeyDescription API', () => {
+          it('returns a key description', async () => {
+            const keyId = `https://example.com/kms/${await generateId()}`;
+            const controller = 'https://example.com/i/foo';
+            const invocationTarget = {id: keyId, type};
+            await brSSM.generateKey(
+              {keyId, controller, operation: {invocationTarget}});
+
+            const result = await brSSM.getKeyDescription({keyId, controller});
+            result.should.be.an('object');
+            result.should.have.keys([
+              '@context', 'id', expectedPublicKeyProperty,
+              'type', 'controller'
+            ]);
+            result['@context'].should.equal(expectedContext);
+            result.id.should.equal(keyId);
+            result.controller.should.equal(controller);
+            result.type.should.equal(expectedPublicKeyType);
+          });
+        });
+
         describe('non-asymmetric key APIs', () => {
           it('throws when trying to derive a secret', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
@@ -322,27 +343,6 @@ for(const encryptConfig of keyRecordEncryption) {
             should.exist(err);
             should.not.exist(result);
             err.name.should.equal('Error');
-          });
-        });
-
-        describe('getKeyDescription API', () => {
-          it('returns a key description', async () => {
-            const keyId = `https://example.com/kms/${await generateId()}`;
-            const controller = 'https://example.com/i/foo';
-            const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey(
-              {keyId, controller, operation: {invocationTarget}});
-
-            const result = await brSSM.getKeyDescription({keyId, controller});
-            result.should.be.an('object');
-            result.should.have.keys([
-              '@context', 'id', expectedPublicKeyProperty,
-              'type', 'controller'
-            ]);
-            result['@context'].should.equal(expectedContext);
-            result.id.should.equal(keyId);
-            result.controller.should.equal(controller);
-            result.type.should.equal(expectedPublicKeyType);
           });
         });
       });
