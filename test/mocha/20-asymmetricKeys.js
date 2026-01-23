@@ -166,13 +166,13 @@ for(const encryptConfig of keyRecordEncryption) {
             } else {
               verifyData = base64url.encode(plaintextBuffer);
             }
-            const signResult = await brSSM.sign(
-              {keyId, operation: {invocationTarget, verifyData}});
+            const result = await brSSM.sign(
+              {keyId, operation: {verifyData}});
 
-            should.exist(signResult);
-            signResult.should.be.an('object');
-            signResult.should.have.keys(['signatureValue']);
-            const {signatureValue} = signResult;
+            should.exist(result);
+            result.should.be.an('object');
+            result.should.have.keys(['signatureValue']);
+            const {signatureValue} = result;
             signatureValue.should.be.a('string');
 
             let verifier;
@@ -238,7 +238,7 @@ for(const encryptConfig of keyRecordEncryption) {
               const plaintextBuffer = Buffer.from(uuid(), 'utf8');
               const verifyData = base64url.encode(plaintextBuffer);
               result = await brSSM.sign({
-                keyId, operation: {invocationTarget, verifyData},
+                keyId, operation: {verifyData},
                 zcapInvocation
               });
             } catch(e) {
@@ -283,12 +283,12 @@ for(const encryptConfig of keyRecordEncryption) {
               {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
 
-            let signResult;
+            let wrapResult;
             let err;
             try {
               const unwrappedKey =
                 '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
-              signResult = await brSSM.wrapKey({
+              wrapResult = await brSSM.wrapKey({
                 keyId, operation: {unwrappedKey}
               });
             } catch(e) {
@@ -296,7 +296,7 @@ for(const encryptConfig of keyRecordEncryption) {
             }
 
             should.exist(err);
-            should.not.exist(signResult);
+            should.not.exist(wrapResult);
             err.name.should.equal('Error');
           });
         });
