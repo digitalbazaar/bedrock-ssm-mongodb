@@ -251,7 +251,9 @@ for(const encryptConfig of keyRecordEncryption) {
             err.message.should.equal(
               'Maximum zcap invocation capability chain length (1) exceeded.');
           });
+        });
 
+        describe('non-asymmetric key APIs', () => {
           it('throws when trying to derive a secret', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
@@ -297,6 +299,28 @@ for(const encryptConfig of keyRecordEncryption) {
 
             should.exist(err);
             should.not.exist(wrapResult);
+            err.name.should.equal('Error');
+          });
+
+          it('throws when trying to unwrap a key', async () => {
+            const keyId = `https://example.com/kms/${await generateId()}`;
+            const controller = 'https://example.com/i/foo';
+            const invocationTarget = {id: keyId, type};
+            await brSSM.generateKey(
+              {keyId, controller, operation: {invocationTarget}});
+
+            const wrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
+
+            let result;
+            let err;
+            try {
+              result = await brSSM.unwrapKey({keyId, operation: {wrappedKey}});
+            } catch(e) {
+              err = e;
+            }
+
+            should.exist(err);
+            should.not.exist(result);
             err.name.should.equal('Error');
           });
         });
