@@ -9,8 +9,6 @@ import * as cborg from 'cborg';
 import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
 import * as Ed25519Multikey from '@digitalbazaar/ed25519-multikey';
 import {generateId} from 'bnid';
-// FIXME: use `globalThis.crypto.randomUUID` instead
-import {v4 as uuid} from 'uuid';
 
 // import is for testing purposes only; not a public export
 import {_createKeyRecordCipher} from '@bedrock/ssm-mongodb';
@@ -159,7 +157,8 @@ for(const encryptConfig of keyRecordEncryption) {
             const {keyDescription: publicKey} = await brSSM.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
-            const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+            const plaintextBuffer = Buffer.from(
+              globalThis.crypto.randomUUID(), 'utf8');
             let verifyData;
             if(type.startsWith('urn:webkms:multikey:BBS-') ||
               type === 'urn:webkms:multikey:Bls12381G2') {
@@ -238,7 +237,8 @@ for(const encryptConfig of keyRecordEncryption) {
             let result;
             let err;
             try {
-              const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+              const plaintextBuffer = Buffer.from(
+                globalThis.crypto.randomUUID(), 'utf8');
               const verifyData = base64url.encode(plaintextBuffer);
               result = await brSSM.sign({
                 keyId, operation: {verifyData},
