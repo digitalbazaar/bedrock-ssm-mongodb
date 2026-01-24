@@ -3,8 +3,13 @@
  */
 import * as base64url from 'base64url-universal';
 import * as bedrock from '@bedrock/core';
+import * as Bls12381Multikey from '@digitalbazaar/bls12-381-multikey';
 import * as brSSM from '@bedrock/ssm-mongodb';
+import * as cborg from 'cborg';
+import * as EcdsaMultikey from '@digitalbazaar/ecdsa-multikey';
+import * as Ed25519Multikey from '@digitalbazaar/ed25519-multikey';
 import {generateId} from 'bnid';
+// FIXME: use `globalThis.crypto.randomUUID` instead
 import {v4 as uuid} from 'uuid';
 
 // import is for testing purposes only; not a public export
@@ -30,18 +35,27 @@ const keyRecordEncryption = [
 ];
 const supportedKeys = [
   {
-    type: 'X25519KeyAgreementKey2020',
-    expectedContext: 'https://w3id.org/security/suites/x25519-2020/v1',
-    expectedPublicKeyType: 'X25519KeyAgreementKey2020'
+    type: 'Ed25519VerificationKey2018',
+    expectedContext: 'https://w3id.org/security/suites/ed25519-2018/v1',
+    expectedPublicKeyType: 'Ed25519VerificationKey2018',
+    expectedPublicKeyProperty: 'publicKeyBase58'
   },
-  //{type: 'urn:webkms:multikey:X25519'},
-  // {type: 'urn:webkms:multikey:P-256'},
-  // {type: 'urn:webkms:multikey:P-384'},
-  // {type: 'urn:webkms:multikey:P-521'}
+  {
+    type: 'Ed25519VerificationKey2020',
+    expectedContext: 'https://w3id.org/security/suites/ed25519-2020/v1',
+    expectedPublicKeyType: 'Ed25519VerificationKey2020'
+  },
+  {type: 'urn:webkms:multikey:Ed25519'},
+  {type: 'urn:webkms:multikey:P-256'},
+  {type: 'urn:webkms:multikey:P-384'},
+  {type: 'urn:webkms:multikey:P-521'},
+  {type: 'urn:webkms:multikey:BBS-BLS12-381-SHA-256'},
+  {type: 'urn:webkms:multikey:BBS-BLS12-381-SHAKE-256'},
+  {type: 'urn:webkms:multikey:Bls12381G2'}
 ];
 
 for(const encryptConfig of keyRecordEncryption) {
-  describe(`key agreement keys ${encryptConfig.title}`, () => {
+  describe(`asymmetric keys ${encryptConfig.title}`, () => {
     const moduleConfig = bedrock.config['ssm-mongodb'];
     const oldConfigValue = moduleConfig.keyRecordEncryption;
     before(async () => {
@@ -79,8 +93,10 @@ for(const encryptConfig of keyRecordEncryption) {
             keyDescription.should.have.keys([
               '@context', 'id', expectedPublicKeyProperty,
               'type', 'controller']);
+            keyDescription['@context'].should.equal(expectedContext);
             keyDescription.id.should.equal(keyId);
             keyDescription.type.should.equal(expectedPublicKeyType);
+            keyDescription.controller.should.equal(controller);
           });
 
           it('generates with a public alias template', async () => {
@@ -135,47 +151,70 @@ for(const encryptConfig of keyRecordEncryption) {
           });
         });
 
-        describe('deriveSecret API', () => {
-          it('derives a shared secret', async () => {
+        describe('sign API', () => {
+          it('produces a verifiable signature', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
             const {keyDescription: publicKey} = await brSSM.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
-            const result = await brSSM.deriveSecret(
-              {keyId, operation: {invocationTarget, publicKey}});
+            const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+            let verifyData;
+            if(type.startsWith('urn:webkms:multikey:BBS-') ||
+              type === 'urn:webkms:multikey:Bls12381G2') {
+              const header = new Uint8Array();
+              const messages = [plaintextBuffer];
+              verifyData = base64url.encode(cborg.encode([header, messages]));
+            } else {
+              verifyData = base64url.encode(plaintextBuffer);
+            }
+            const result = await brSSM.sign(
+              {keyId, operation: {verifyData}});
 
             should.exist(result);
             result.should.be.an('object');
-            result.should.have.keys(['secret']);
-            const {secret} = result;
-            secret.should.be.a('string');
-          });
+            result.should.have.keys(['signatureValue']);
+            const {signatureValue} = result;
+            signatureValue.should.be.a('string');
 
-          it('fails when public types do not match', async () => {
-            const keyId = `https://example.com/kms/${await generateId()}`;
-            const controller = 'https://example.com/i/foo';
-            const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey({
-              keyId, controller, operation: {invocationTarget}
-            });
+            let verifier;
+            if(type.includes('Ed25519')) {
+              const keyPair = await Ed25519Multikey.from(publicKey);
+              verifier = keyPair.verifier();
+            } else if(type.startsWith('urn:webkms:multikey:P-')) {
+              const keyPair = await EcdsaMultikey.from(publicKey);
+              verifier = keyPair.verifier();
+            } else if(type.startsWith('urn:webkms:multikey:BBS-') ||
+              type === 'urn:webkms:multikey:Bls12381G2') {
+              const keyPair = await Bls12381Multikey.from(publicKey);
+              verifier = keyPair.verifier();
 
-            const publicKey = {type: 'NonMatchingType'};
-
-            let result;
-            let err;
-            try {
-              result = await brSSM.deriveSecret({
-                keyId, operation: {publicKey}
+              // do multiverify
+              const presentationHeader = new Uint8Array();
+              const header = new Uint8Array();
+              const messages = [plaintextBuffer];
+              const proof = await keyPair.deriveProof({
+                signature: base64url.decode(signatureValue),
+                header, messages, presentationHeader,
+                disclosedMessageIndexes: [0]
               });
-            } catch(e) {
-              err = e;
+              const verified = await verifier.multiverify({
+                proof, header, presentationHeader, messages
+              });
+              verified.should.be.a('boolean');
+              verified.should.be.true;
+              return;
             }
 
-            should.exist(err);
-            should.not.exist(result);
-            err.name.should.equal('Error');
+            const {verify} = verifier;
+            const verified = await verify({
+              data: plaintextBuffer,
+              signature: base64url.decode(signatureValue)
+            });
+
+            verified.should.be.a('boolean');
+            verified.should.be.true;
           });
 
           it('fails when "maxCapabilityChainLength" is exceeded', async () => {
@@ -202,7 +241,7 @@ for(const encryptConfig of keyRecordEncryption) {
               const plaintextBuffer = Buffer.from(uuid(), 'utf8');
               const verifyData = base64url.encode(plaintextBuffer);
               result = await brSSM.sign({
-                keyId, operation: {invocationTarget, verifyData},
+                keyId, operation: {verifyData},
                 zcapInvocation
               });
             } catch(e) {
@@ -238,8 +277,8 @@ for(const encryptConfig of keyRecordEncryption) {
           });
         });
 
-        describe('non-key agreement key APIs', () => {
-          it('throws when trying to sign', async () => {
+        describe('non-asymmetric key APIs', () => {
+          it('throws when trying to derive a secret', async () => {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
@@ -247,17 +286,18 @@ for(const encryptConfig of keyRecordEncryption) {
               {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
 
-            let signResult;
+            let deriveResult;
             let err;
             try {
-              const verifyData = base64url.encode(Buffer.from(uuid(), 'utf8'));
-              signResult = await brSSM.sign({keyId, operation: {verifyData}});
+              deriveResult = await brSSM.deriveSecret({
+                keyId, operation: {publicKey: {type}}
+              });
             } catch(e) {
               err = e;
             }
 
             should.exist(err);
-            should.not.exist(signResult);
+            should.not.exist(deriveResult);
             err.name.should.equal('Error');
           });
 
@@ -269,12 +309,12 @@ for(const encryptConfig of keyRecordEncryption) {
               {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
 
-            let signResult;
+            let wrapResult;
             let err;
             try {
               const unwrappedKey =
                 '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
-              signResult = await brSSM.wrapKey({
+              wrapResult = await brSSM.wrapKey({
                 keyId, operation: {unwrappedKey}
               });
             } catch(e) {
@@ -282,7 +322,7 @@ for(const encryptConfig of keyRecordEncryption) {
             }
 
             should.exist(err);
-            should.not.exist(signResult);
+            should.not.exist(wrapResult);
             err.name.should.equal('Error');
           });
 

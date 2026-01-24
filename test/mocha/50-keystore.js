@@ -65,5 +65,26 @@ for(const encryptConfig of keyRecordEncryption) {
         result.count.should.equal(3);
       });
     });
+
+    describe('generateKey API', () => {
+      it('throws an Error if invalid type is used', async () => {
+        const keyId = `https://example.com/kms/${await generateId()}`;
+        const controller = 'https://example.com/i/foo';
+        const type = 'Invalid';
+        const invocationTarget = {id: keyId, type};
+
+        let result;
+        let err;
+        try {
+          result = await brSSM.generateKey(
+            {keyId, controller, operation: {invocationTarget}});
+        } catch(e) {
+          err = e;
+        }
+        should.exist(err);
+        should.not.exist(result);
+        err.name.should.equal('Error');
+      });
+    });
   });
 }
