@@ -5,7 +5,6 @@ import * as base64url from 'base64url-universal';
 import * as bedrock from '@bedrock/core';
 import * as brSSM from '@bedrock/ssm-mongodb';
 import {generateId} from 'bnid';
-import {v4 as uuid} from 'uuid';
 
 // import is for testing purposes only; not a public export
 import {_createKeyRecordCipher} from '@bedrock/ssm-mongodb';
@@ -201,7 +200,8 @@ for(const encryptConfig of keyRecordEncryption) {
             let result;
             let err;
             try {
-              const plaintextBuffer = Buffer.from(uuid(), 'utf8');
+              const plaintextBuffer = Buffer.from(
+                globalThis.crypto.randomUUID(), 'utf8');
               const verifyData = base64url.encode(plaintextBuffer);
               result = await brSSM.sign({
                 keyId, operation: {invocationTarget, verifyData},
@@ -252,7 +252,8 @@ for(const encryptConfig of keyRecordEncryption) {
             let signResult;
             let err;
             try {
-              const verifyData = base64url.encode(Buffer.from(uuid(), 'utf8'));
+              const verifyData = base64url.encode(Buffer.from(
+                globalThis.crypto.randomUUID(), 'utf8'));
               signResult = await brSSM.sign({keyId, operation: {verifyData}});
             } catch(e) {
               err = e;
