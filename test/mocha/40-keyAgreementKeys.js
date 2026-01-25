@@ -33,7 +33,7 @@ const supportedKeys = [
     expectedContext: 'https://w3id.org/security/suites/x25519-2020/v1',
     expectedPublicKeyType: 'X25519KeyAgreementKey2020'
   },
-  //{type: 'urn:webkms:multikey:X25519'},
+  {type: 'urn:webkms:multikey:X25519'},
   // {type: 'urn:webkms:multikey:P-256'},
   // {type: 'urn:webkms:multikey:P-384'},
   // {type: 'urn:webkms:multikey:P-521'}
