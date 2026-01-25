@@ -1,7 +1,6 @@
 /*!
  * Copyright (c) 2019-2026 Digital Bazaar, Inc. All rights reserved.
  */
-import * as base64url from 'base64url-universal';
 import * as bedrock from '@bedrock/core';
 import * as brSSM from '@bedrock/ssm-mongodb';
 import {generateId} from 'bnid';
@@ -202,7 +201,8 @@ for(const encryptConfig of keyRecordEncryption) {
             try {
               const plaintextBuffer = Buffer.from(
                 globalThis.crypto.randomUUID(), 'utf8');
-              const verifyData = base64url.encode(plaintextBuffer);
+              const verifyData =
+                Buffer.from(plaintextBuffer).toString('base64url');
               result = await brSSM.sign({
                 keyId, operation: {invocationTarget, verifyData},
                 zcapInvocation
@@ -252,8 +252,9 @@ for(const encryptConfig of keyRecordEncryption) {
             let signResult;
             let err;
             try {
-              const verifyData = base64url.encode(Buffer.from(
-                globalThis.crypto.randomUUID(), 'utf8'));
+              const verifyData = Buffer
+                .from(globalThis.crypto.randomUUID(), 'utf8')
+                .toString('base64url');
               signResult = await brSSM.sign({keyId, operation: {verifyData}});
             } catch(e) {
               err = e;
