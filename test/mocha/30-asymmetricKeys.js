@@ -1,7 +1,6 @@
 /*!
  * Copyright (c) 2019-2026 Digital Bazaar, Inc. All rights reserved.
  */
-import * as base64url from 'base64url-universal';
 import * as bedrock from '@bedrock/core';
 import * as Bls12381Multikey from '@digitalbazaar/bls12-381-multikey';
 import * as brSSM from '@bedrock/ssm-mongodb';
@@ -164,9 +163,10 @@ for(const encryptConfig of keyRecordEncryption) {
               type === 'urn:webkms:multikey:Bls12381G2') {
               const header = new Uint8Array();
               const messages = [plaintextBuffer];
-              verifyData = base64url.encode(cborg.encode([header, messages]));
+              verifyData = Buffer.from(cborg.encode([header, messages]))
+                .toString('base64url');
             } else {
-              verifyData = base64url.encode(plaintextBuffer);
+              verifyData = Buffer.from(plaintextBuffer).toString('base64url');
             }
             const result = await brSSM.sign(
               {keyId, operation: {verifyData}});
@@ -194,7 +194,7 @@ for(const encryptConfig of keyRecordEncryption) {
               const header = new Uint8Array();
               const messages = [plaintextBuffer];
               const proof = await keyPair.deriveProof({
-                signature: base64url.decode(signatureValue),
+                signature: Buffer.from(signatureValue, 'base64url'),
                 header, messages, presentationHeader,
                 disclosedMessageIndexes: [0]
               });
@@ -209,7 +209,7 @@ for(const encryptConfig of keyRecordEncryption) {
             const {verify} = verifier;
             const verified = await verify({
               data: plaintextBuffer,
-              signature: base64url.decode(signatureValue)
+              signature: Buffer.from(signatureValue, 'base64url')
             });
 
             verified.should.be.a('boolean');
@@ -237,9 +237,9 @@ for(const encryptConfig of keyRecordEncryption) {
             let result;
             let err;
             try {
-              const plaintextBuffer = Buffer.from(
-                globalThis.crypto.randomUUID(), 'utf8');
-              const verifyData = base64url.encode(plaintextBuffer);
+              const verifyData = Buffer
+                .from(globalThis.crypto.randomUUID(), 'utf8')
+                .toString('base64url');
               result = await brSSM.sign({
                 keyId, operation: {verifyData},
                 zcapInvocation
