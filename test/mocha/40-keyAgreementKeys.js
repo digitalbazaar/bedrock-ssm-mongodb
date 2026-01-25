@@ -34,9 +34,9 @@ const supportedKeys = [
     expectedPublicKeyType: 'X25519KeyAgreementKey2020'
   },
   {type: 'urn:webkms:multikey:X25519'},
-  // {type: 'urn:webkms:multikey:P-256'},
-  // {type: 'urn:webkms:multikey:P-384'},
-  // {type: 'urn:webkms:multikey:P-521'}
+  {type: 'urn:webkms:multikey:ECDH-P-256'},
+  {type: 'urn:webkms:multikey:ECDH-P-384'},
+  {type: 'urn:webkms:multikey:ECDH-P-521'}
 ];
 
 for(const encryptConfig of keyRecordEncryption) {
