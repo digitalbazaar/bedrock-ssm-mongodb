@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 13.2.0 - 2026-mm-dd
+## 13.2.0 - 2026-01-29
 
 ### Added
 - Add support for ECDH P-256/384/521 key agreement keys. These keys can be
