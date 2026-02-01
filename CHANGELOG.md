@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 13.2.1 - 2026-01-dd
+## 13.2.1 - 2026-01-31
 
 ### Fixed
 - Ensure key record cipher creation is awaited on initialization.
