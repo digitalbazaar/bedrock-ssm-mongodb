@@ -35,9 +35,11 @@ const supportedKeys = [
 
 for(const encryptConfig of keyRecordEncryption) {
   describe(`hmac keys ${encryptConfig.title}`, () => {
+    let kmsModuleApi;
     const moduleConfig = bedrock.config['ssm-mongodb'];
     const oldConfigValue = moduleConfig.keyRecordEncryption;
     before(async () => {
+      kmsModuleApi = await brSSM.getKmsModuleApi();
       moduleConfig.keyRecordEncryption = {kek: encryptConfig.kek};
       await _createKeyRecordCipher();
     });
@@ -57,7 +59,7 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            const result = await brSSM.generateKey(
+            const result = await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
             should.exist(result);
@@ -79,13 +81,13 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey(
+            await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
             let result;
             let err;
             try {
-              result = await brSSM.generateKey(
+              result = await kmsModuleApi.generateKey(
                 {keyId, controller, operation: {invocationTarget}});
               should.exist(result);
             } catch(e) {
@@ -103,7 +105,7 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey(
+            await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
             const operation = {
@@ -112,7 +114,7 @@ for(const encryptConfig of keyRecordEncryption) {
             let err;
             let result;
             try {
-              result = await brSSM.sign({keyId, operation});
+              result = await kmsModuleApi.sign({keyId, operation});
             } catch(e) {
               err = e;
             }
@@ -132,7 +134,7 @@ for(const encryptConfig of keyRecordEncryption) {
               type,
               maxCapabilityChainLength: 1
             };
-            await brSSM.generateKey({
+            await kmsModuleApi.generateKey({
               keyId, controller, operation: {invocationTarget}
             });
 
@@ -148,7 +150,7 @@ for(const encryptConfig of keyRecordEncryption) {
               const operation = {
                 verifyData: '2eb221b8-1777-417a-8f3a-05cdd030de12'
               };
-              result = await brSSM.sign({
+              result = await kmsModuleApi.sign({
                 keyId, operation, zcapInvocation
               });
             } catch(e) {
@@ -179,14 +181,14 @@ for(const encryptConfig of keyRecordEncryption) {
               const keyId = `https://example.com/kms/${await generateId()}`;
               const controller = 'https://example.com/i/foo';
               const invocationTarget = {id: keyId, type};
-              await brSSM.generateKey(
+              await kmsModuleApi.generateKey(
                 {keyId, controller, operation: {invocationTarget}});
 
               this.timeout(0);
               const promises = [];
               for(let i = 0; i < operationCount; ++i) {
                 const operation = {verifyData: vData[i]};
-                promises.push(brSSM.sign({keyId, operation}));
+                promises.push(kmsModuleApi.sign({keyId, operation}));
               }
               let result;
               let err;
@@ -208,17 +210,17 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey(
+            await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
             const verifyData = '2eb221b8-1777-417a-8f3a-05cdd030de12';
             const operation = {
               verifyData
             };
-            const result = await brSSM.sign({keyId, operation});
+            const result = await kmsModuleApi.sign({keyId, operation});
             const {signatureValue} = result;
 
-            const result2 = await brSSM.verify(
+            const result2 = await kmsModuleApi.verify(
               {keyId, operation: {signatureValue, verifyData}});
 
             result2.should.be.an('object');
@@ -234,7 +236,7 @@ for(const encryptConfig of keyRecordEncryption) {
               type,
               maxCapabilityChainLength: 1
             };
-            await brSSM.generateKey({
+            await kmsModuleApi.generateKey({
               keyId, controller, operation: {invocationTarget}
             });
 
@@ -242,7 +244,9 @@ for(const encryptConfig of keyRecordEncryption) {
             const operation = {
               verifyData
             };
-            const {signatureValue} = await brSSM.sign({keyId, operation});
+            const {signatureValue} = await kmsModuleApi.sign({
+              keyId, operation
+            });
 
             // mock `zcapInvocation` with `dereferencedChain` that is
             // too long (entries not checked, just length)
@@ -253,7 +257,7 @@ for(const encryptConfig of keyRecordEncryption) {
             let result;
             let err;
             try {
-              result = await brSSM.verify({
+              result = await kmsModuleApi.verify({
                 keyId, operation: {signatureValue, verifyData},
                 zcapInvocation
               });
@@ -274,10 +278,12 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey(
+            await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
-            const result = await brSSM.getKeyDescription({keyId, controller});
+            const result = await kmsModuleApi.getKeyDescription({
+              keyId, controller
+            });
             result.should.be.an('object');
             result.should.have.keys([
               '@context', 'id', 'type', 'controller']);
@@ -293,14 +299,14 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            const result = await brSSM.generateKey(
+            const result = await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
 
             let deriveResult;
             let err;
             try {
-              deriveResult = await brSSM.deriveSecret({
+              deriveResult = await kmsModuleApi.deriveSecret({
                 keyId, operation: {publicKey: {type}}
               });
             } catch(e) {
@@ -316,7 +322,7 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            const result = await brSSM.generateKey(
+            const result = await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
             should.exist(result);
 
@@ -325,7 +331,7 @@ for(const encryptConfig of keyRecordEncryption) {
             try {
               const unwrappedKey =
                 '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
-              wrapResult = await brSSM.wrapKey({
+              wrapResult = await kmsModuleApi.wrapKey({
                 keyId, operation: {unwrappedKey}
               });
             } catch(e) {
@@ -341,7 +347,7 @@ for(const encryptConfig of keyRecordEncryption) {
             const keyId = `https://example.com/kms/${await generateId()}`;
             const controller = 'https://example.com/i/foo';
             const invocationTarget = {id: keyId, type};
-            await brSSM.generateKey(
+            await kmsModuleApi.generateKey(
               {keyId, controller, operation: {invocationTarget}});
 
             const wrappedKey = '8vEgpnq8F6QVRmaSYPHTKKZyCXMOgRLiBdZPcfYnIfI';
@@ -349,7 +355,9 @@ for(const encryptConfig of keyRecordEncryption) {
             let result;
             let err;
             try {
-              result = await brSSM.unwrapKey({keyId, operation: {wrappedKey}});
+              result = await kmsModuleApi.unwrapKey({
+                keyId, operation: {wrappedKey}
+              });
             } catch(e) {
               err = e;
             }
