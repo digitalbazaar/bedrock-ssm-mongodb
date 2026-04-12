@@ -38,6 +38,7 @@
   },
   "peerDependencies": {
     "@bedrock/core": "^6.3.0",
+    "@bedrock/kms-module-core": "^1.0.0",
     "@bedrock/mongodb": "^11.0.0",
     "@bedrock/package-manager": "^3.0.0"
   },
