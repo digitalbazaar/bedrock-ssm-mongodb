@@ -1,5 +1,16 @@
 # bedrock-ssm-mongodb ChangeLog
 
+## 13.3.0 - 2026-mm-dd
+
+### Added
+- Add `getKmsModuleApi()` export for use with modern `@bedrock/kms` that
+  will use this function to obtain the KMS module API instead of expecting
+  the main module to export each individual KMS module function directly.
+
+### Changed
+- Use peer dependencies for kms module core implementation, externalizing
+  most code to those packages.
+
 ## 13.2.1 - 2026-01-31
 
 ### Fixed
