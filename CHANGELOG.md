@@ -1,6 +1,6 @@
 # bedrock-ssm-mongodb ChangeLog
 
-## 13.3.0 - 2026-mm-dd
+## 13.3.0 - 2026-04-24
 
 ### Added
 - Add `getKmsModuleApi()` export for use with modern `@bedrock/kms` that
